@@ -3,11 +3,6 @@
 - Here we collect all the works that may be useful for writing our paper
 - We divide these works by topic in order to structure them
 
-> [!NOTE]
-> This review table will be updated, so it is not a final version.
-> 1. Подборка из 20 работ на 25.09.26.
-> 2. Добавлены 6 работ по выбору метода обучения маршрутизатора; всего 26 работ. Две ранее добавленные статьи перенесены в новый тематический блок без дублирования.
-> 3. Добавлены 20 работ по классическим каскадам, бустингу с учётом стоимости и адаптивным вычислениям; всего 46 работ.
 
 | Topic | Title | Year | Authors | Paper | Code | Summary |
 | :--- | :--- | :---: | :--- | :---: | :---: | :--- |
