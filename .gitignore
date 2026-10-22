@@ -172,3 +172,14 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Generated baseline runs and TeX scratch files.
+code/results/
+*.aux
+*.bbl
+*.blg
+*.out
+*.nav
+*.snm
+*.toc
+*.synctex.gz

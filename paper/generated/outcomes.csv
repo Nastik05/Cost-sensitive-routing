@@ -1,0 +1,10 @@
+method,outcome,escalate_yes,escalate_no
+confidence,1,123.0,138.0
+confidence,0,391.0,2266.0
+confidence,-1,102.0,60.0
+direct,1,101.9,178.3
+direct,0,452.40000000000003,2204.6
+direct,-1,61.7,81.1
+events,1,85.2,188.9
+events,0,479.69999999999993,2177.3
+events,-1,51.1,97.8

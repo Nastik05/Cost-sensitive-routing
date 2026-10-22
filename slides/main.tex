@@ -1,118 +1,39 @@
-\documentclass[aspectratio=169]{beamer}
-
-% \graphicspath{{figs}}  % your figures here
-
-\usepackage{cmap}
-\usepackage{tikz}
-\usepackage{array}
-\usepackage{multicol}
-\usepackage{booktabs}
-\usepackage{csquotes}
-\usepackage{amssymb,amsfonts,amsmath}
-
-\usecolortheme{beaver}
-\usefonttheme[onlymath]{serif}  % math fonts as in article
+\documentclass[aspectratio=169,11pt]{beamer}
+\usepackage{fontspec}
+\setsansfont{DejaVu Sans}
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\usepackage{graphicx}
+\definecolor{ink}{HTML}{17324D}
+\definecolor{accent}{HTML}{277D77}
+\setbeamercolor{normal text}{fg=ink,bg=white}
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{footline}[page number]
-\setbeamertemplate{blocks}[rounded=true,shadow=true]
-\setbeamersize{text margin left=0.5cm,text margin right=0.5cm}
-\setbeamerfont{author}{size=\normalsize}
-\setbeamerfont{institute}{size=\normalsize}
-\setbeamerfont{date}{size=\normalsize}
-
-\title{Title}
-\author{
-    Name Surname\\
-    Consultant: Name Surname, PhD/DSc\\
-    Expert: Name Surname, PhD/DSc
-}
-\institute{
-    Course: My first scientific paper\\
-    Intelligent Systems Department, MIPT
-}
-\date{Date}
-
+\setbeamertemplate{footline}{}
+\setbeamerfont{normal text}{size=\small}
+\setbeamersize{text margin left=.55cm,text margin right=.55cm}
 \begin{document}
-
-\begin{frame}
-    \thispagestyle{empty}
-    \maketitle
+\begin{frame}[t,plain]
+{\fontsize{15}{18}\selectfont\bfseries Обучение роутера: исправления и вред}\par
+\vspace{.1cm}
+{\fontsize{8}{10}\selectfont Anastasia Shlopak \hfill Руководитель: Archil Maysuradze, PhD}\par
+\vspace{.14cm}
+{\fontsize{10}{12}\selectfont\textbf{Цель:} выбор обучения роутера по данным, паре моделей и бюджету.}\par
+\vspace{.12cm}
+{\fontsize{9}{11}\selectfont\textcolor{accent}{Контроль:} фиксируем экспертов и признаки; меняем объём и состав train.}\par
+\vspace{.03cm}
+{\centering
+\includegraphics[height=3.0cm]{../paper/figures/decision_profiles.pdf}
+\par}
+\vspace{-.2cm}
+{\fontsize{7.5}{9}\selectfont BANKING77: TF--IDF $\to$ BERT-tiny; 20\% вызовов; fit 1000/dev 500; 10 обучений.}\par
+\vspace{.13cm}
+{\fontsize{8.5}{10.5}\selectfont Строки: $+1$ --- выбор лучше альтернативы;
+$-1$ --- хуже; $0$ --- правильность совпадает.}\par
+\vspace{.17cm}
+{\fontsize{10}{12}\selectfont\textbf{Наблюдение:} Events реже исправляет \emph{и} реже портит ответы.}\par
+\vspace{.1cm}
+{\fontsize{7.5}{9}\selectfont Профиль описательный; различия accuracy после общей поправки не установлены.}\par
+\vspace{.15cm}
+{\fontsize{8.5}{10.5}\selectfont\textcolor{accent}{Далее:} проверить компоненты, коррекцию отбора и перенос рекомендаций.}
 \end{frame}
-
-\begin{frame}{Title or a main part of it}
-    Couple of motivational sentences ...
-    \begin{block}{Goal}
-        Investigate ... 
-    \end{block}
-    \begin{block}{Problem}
-        Put the brief idea here ...
-    \end{block}
-    \begin{block}{Solution}
-        Your results appears twice, as a promise here and as a contribution later ...
-        \begin{enumerate}[1)]
-            \item Set ...
-            \item Put ...
-            \item Get ...
-        \end{enumerate}
-    \end{block}
-\end{frame}
-
-\begin{frame}{One-slide talk}
-    What the audience sees on the figure.
-    \begin{columns}
-    \begin{column}{0.5\textwidth}
-        \begin{enumerate}[1)]
-            \item Notation
-            \item Subjects
-        \end{enumerate}
-    \end{column}
-        \begin{column}{0.5\textwidth}
-            \begin{figure}[h]
-                \centering
-                \includegraphics[width=0.8\textwidth]{example-image}
-                \caption{Caption}
-            \end{figure}    
-        \end{column}
-    \end{columns}
-    What are the consequences?
-\end{frame}
-
-\begin{frame}{Problem statement}
-    Given a dataset $\mathfrak{D} = \left\{ (\mathbf{x}_i, y_i) \right\}_{i=1}^{N}$ ...
-\end{frame}
-
-\begin{frame}{Solution}
-    We propose ...
-\end{frame}
-
-\begin{frame}{Experiments}
-    We consider a MNIST dataset ...
-    \begin{columns}
-        \begin{column}{0.5\textwidth}
-            \begin{figure}[h]
-                \centering
-                \includegraphics[width=0.7\textwidth]{example-image-a}
-                \caption{Caption A}
-            \end{figure}    
-        \end{column}
-        \begin{column}{0.5\textwidth}
-            \begin{figure}[h]
-                \centering
-                \includegraphics[width=0.7\textwidth]{example-image-b}
-                \caption{Caption B}
-            \end{figure}    
-        \end{column}
-    \end{columns}
-    Results show ...
-\end{frame}
-
-\begin{frame}{Conclusion}
-    \begin{enumerate}[1)]
-        \item We consider a problem ...
-        \item We propose ...
-        \item Experiments show ...
-        \item Our method outperforms ...
-    \end{enumerate}
-\end{frame}
-
-\end{document} 
+\end{document}

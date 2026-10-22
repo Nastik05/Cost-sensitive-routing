@@ -1,0 +1,338 @@
+{
+  "dataset": "BANKING77",
+  "license": "CC BY 4.0",
+  "citation": "Casanueva et al., Efficient Intent Detection with Dual Sentence Encoders, NLP4ConvAI 2020",
+  "source": "https://github.com/PolyAI-LDN/task-specific-datasets",
+  "revision": "57ec275d8078af65b7731c2a98be812d844a6d6b",
+  "prepared_sha256": "8f3e5e6d21a11a33030be9e5371c4f5d8437dbf22873f68c9e2c623e89c4d11b",
+  "cache_sha256": "a25ef914c64aa8dd663c6de4e32737a52246d87a0a853e3ed831205dd144931f",
+  "reference_sha256": "3ceee777de03a1952598b70b201096867008af422316834338e509a5b4544be2",
+  "upstream_metrics_sha256": "feca1c7faf020df38e8fd71f79a7f5036adc06e2b85076771b81538b2d0dce0d",
+  "split_counts": {
+    "test": 3080,
+    "router_fit": 2000,
+    "policy_dev": 1000
+  },
+  "experts": {
+    "tfidf_lr": {
+      "selected_C": 16,
+      "selection_history": [
+        {
+          "C": 0.25,
+          "accuracy": 0.7183333333333334,
+          "log_loss": 3.0456960008924896,
+          "n_iter": [
+            21
+          ]
+        },
+        {
+          "C": 1,
+          "accuracy": 0.8141666666666667,
+          "log_loss": 1.7223360936937664,
+          "n_iter": [
+            44
+          ]
+        },
+        {
+          "C": 4,
+          "accuracy": 0.8533333333333334,
+          "log_loss": 0.9998894962569128,
+          "n_iter": [
+            56
+          ]
+        },
+        {
+          "C": 16,
+          "accuracy": 0.8666666666666667,
+          "log_loss": 0.713969092740077,
+          "n_iter": [
+            70
+          ]
+        }
+      ],
+      "latency": {
+        "median_ms": 0.8140574996104988,
+        "mean_ms": 1.0323699266761348,
+        "p10_ms": 0.711636799860571,
+        "p90_ms": 2.0680290002928814,
+        "serial_calls": 300,
+        "timing_includes_text_preprocessing": true,
+        "threads": 4
+      },
+      "parameter_count": 561330,
+      "final_n_iter": [
+        76
+      ],
+      "name": "tfidf_lr",
+      "wall_seconds": 17.177845755999442,
+      "calibration_accuracy": 0.875,
+      "calibration_log_loss": 0.6581447319734471,
+      "prepared_sha256": "8f3e5e6d21a11a33030be9e5371c4f5d8437dbf22873f68c9e2c623e89c4d11b",
+      "probabilities_sha256": "e23f98c3d09749cdb35240ac925b33153c92a9a98e14ce18cb2cf2018f149174",
+      "protocol_sha256": "f007a48a0e6b4fe297a95fe4ee208f71c0281bfdf9ec15194ffd129266b4cad7",
+      "code": {
+        "common.py": "2fc2c458f8b7c1b36d127b03e493f78a3a87fcd48e767a762a4c78c64015210e",
+        "experts.py": "1d33de340354b83cdb91e7db7cf8a88fbab54b1ca35366ba085ae5f0f5899719",
+        "launch.py": "19064ee5973dbd86987096b6b1b15bf1490a12970b4dac7f2c3493d83a1fbda3",
+        "prepare.py": "e5b54bd6138de9b65fe79c2786981f418ad115de1e51b72f8bb14252ad87f47f"
+      },
+      "environment": {
+        "python": "3.13.14",
+        "platform": "Linux-7.1.5+kali-amd64-x86_64-with-glibc2.43",
+        "numpy": "2.4.6",
+        "scipy": "1.17.1",
+        "sklearn": "1.7.2",
+        "pandas": "2.3.3"
+      },
+      "torch": "2.10.0+cu128",
+      "seed": 20261002
+    },
+    "bert_tiny_tuned": {
+      "selected_epoch": 8,
+      "selection_history": [
+        {
+          "epoch": 1,
+          "train_loss": 4.115779724387384,
+          "train_accuracy": 0.07293186080433424,
+          "seconds": 8.527906369000448,
+          "val_accuracy": 0.39166666666666666,
+          "val_log_loss": 2.995941287161029
+        },
+        {
+          "epoch": 2,
+          "train_loss": 2.2057678491827297,
+          "train_accuracy": 0.5165659512398416,
+          "seconds": 7.8031254739998985,
+          "val_accuracy": 0.6675,
+          "val_log_loss": 1.3999648998476697
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.306114965092269,
+          "train_accuracy": 0.7097311939987497,
+          "seconds": 8.113051696999719,
+          "val_accuracy": 0.7483333333333333,
+          "val_log_loss": 0.9970047899490923
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.9621720971179818,
+          "train_accuracy": 0.7768285059387372,
+          "seconds": 8.439309412000512,
+          "val_accuracy": 0.8,
+          "val_log_loss": 0.8058744329643993
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.7709294172047724,
+          "train_accuracy": 0.8255886643050635,
+          "seconds": 8.148323078999965,
+          "val_accuracy": 0.8075,
+          "val_log_loss": 0.7133871925864735
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.6760024042098715,
+          "train_accuracy": 0.8382996457595332,
+          "seconds": 7.959719982999559,
+          "val_accuracy": 0.8225,
+          "val_log_loss": 0.6647497921047318
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.5948354626452086,
+          "train_accuracy": 0.8660137528651802,
+          "seconds": 7.9845161129996995,
+          "val_accuracy": 0.8283333333333334,
+          "val_log_loss": 0.6368987863535319
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.5749703074500173,
+          "train_accuracy": 0.8712231714940613,
+          "seconds": 8.204978205999396,
+          "val_accuracy": 0.83,
+          "val_log_loss": 0.6276485905345329
+        }
+      ],
+      "refit_history": [
+        {
+          "epoch": 1,
+          "train_loss": 3.976588218723621,
+          "train_accuracy": 0.11018503083847307,
+          "seconds": 10.221263319000172
+        },
+        {
+          "epoch": 2,
+          "train_loss": 1.8419878132682301,
+          "train_accuracy": 0.5867644607434572,
+          "seconds": 9.996572220999951
+        },
+        {
+          "epoch": 3,
+          "train_loss": 1.0761876234930343,
+          "train_accuracy": 0.7446241040173363,
+          "seconds": 10.972506139999496
+        },
+        {
+          "epoch": 4,
+          "train_loss": 0.7956227096324564,
+          "train_accuracy": 0.8123020503417236,
+          "seconds": 10.271477377999872
+        },
+        {
+          "epoch": 5,
+          "train_loss": 0.6446850235352101,
+          "train_accuracy": 0.8458076346057676,
+          "seconds": 10.459801907999463
+        },
+        {
+          "epoch": 6,
+          "train_loss": 0.555847131514434,
+          "train_accuracy": 0.862643773962327,
+          "seconds": 11.139851371999612
+        },
+        {
+          "epoch": 7,
+          "train_loss": 0.5053133233167029,
+          "train_accuracy": 0.8776462743790632,
+          "seconds": 10.234024559000318
+        },
+        {
+          "epoch": 8,
+          "train_loss": 0.47087069902246764,
+          "train_accuracy": 0.8863143857309551,
+          "seconds": 10.327291728000091
+        }
+      ],
+      "latency": {
+        "median_ms": 1.1798549994637142,
+        "mean_ms": 1.2775729733311891,
+        "p10_ms": 1.0360125002989662,
+        "p90_ms": 1.7710332991555333,
+        "serial_calls": 300,
+        "timing_includes_text_preprocessing": true,
+        "threads": 4
+      },
+      "parameter_count": 4395853,
+      "snapshot": {
+        "repo": "prajjwal1/bert-tiny",
+        "revision": "6f75de8b60a9f8a2fdf7b69cbd86d9e64bcb3837",
+        "files": [
+          "config.json",
+          "pytorch_model.bin",
+          "vocab.txt"
+        ]
+      },
+      "max_length": 64,
+      "name": "bert_tiny_tuned",
+      "wall_seconds": 156.7520773010001,
+      "calibration_accuracy": 0.839,
+      "calibration_log_loss": 0.5537188529321146,
+      "prepared_sha256": "8f3e5e6d21a11a33030be9e5371c4f5d8437dbf22873f68c9e2c623e89c4d11b",
+      "probabilities_sha256": "e8db83076c555a344e15af5767abb6a52d0922afbe07a4a6c79f0fc335d319c5",
+      "protocol_sha256": "154989f88b05336e42dbb86fa6b5a0b3ae23b8e1089b6a35b0f692e4ff3e42e2",
+      "code": {
+        "common.py": "2fc2c458f8b7c1b36d127b03e493f78a3a87fcd48e767a762a4c78c64015210e",
+        "estimators.py": "93d8be6271bf3987d1afe57865bf06bd53dd4a209ca02761dc4b3f548a96a7ed",
+        "experts.py": "516544c4d37a812322930cce07464e98dff2482ae3ecb7f2d2468bd13cc6ff96",
+        "launch.py": "19064ee5973dbd86987096b6b1b15bf1490a12970b4dac7f2c3493d83a1fbda3",
+        "prepare.py": "e5b54bd6138de9b65fe79c2786981f418ad115de1e51b72f8bb14252ad87f47f",
+        "routing.py": "70c5fc07b9b5c65fc154d55b8f3ee10ed9f0017e056ec01829df2350b545c879",
+        "test_experiment.py": "7c7113cbd775a4d735415be6ad542df5a657ef1d0fdeea56b83dfbc3ba314341"
+      },
+      "environment": {
+        "python": "3.13.14",
+        "platform": "Linux-7.1.5+kali-amd64-x86_64-with-glibc2.43",
+        "numpy": "2.4.6",
+        "scipy": "1.17.1",
+        "sklearn": "1.7.2",
+        "pandas": "2.3.3"
+      },
+      "torch": "2.10.0+cu128",
+      "seed": 20261002
+    },
+    "minilm_frozen_lr": {
+      "selected_C": 64,
+      "selection_history": [
+        {
+          "C": 0.25,
+          "accuracy": 0.835,
+          "log_loss": 1.7034382341833236,
+          "n_iter": [
+            26
+          ]
+        },
+        {
+          "C": 1,
+          "accuracy": 0.8858333333333334,
+          "log_loss": 0.8484073911066943,
+          "n_iter": [
+            41
+          ]
+        },
+        {
+          "C": 4,
+          "accuracy": 0.9016666666666666,
+          "log_loss": 0.49037877364786064,
+          "n_iter": [
+            62
+          ]
+        },
+        {
+          "C": 16,
+          "accuracy": 0.91,
+          "log_loss": 0.3520955534466412,
+          "n_iter": [
+            96
+          ]
+        },
+        {
+          "C": 64,
+          "accuracy": 0.9108333333333334,
+          "log_loss": 0.3146742942037016,
+          "n_iter": [
+            126
+          ]
+        }
+      ],
+      "latency": {
+        "median_ms": 6.057165999663994,
+        "mean_ms": 6.302793443322419,
+        "p10_ms": 4.899001100056921,
+        "p90_ms": 8.186312900215853,
+        "serial_calls": 300,
+        "timing_includes_text_preprocessing": true,
+        "threads": 4
+      },
+      "parameter_count": 22742861,
+      "final_n_iter": [
+        130
+      ],
+      "name": "minilm_frozen_lr",
+      "wall_seconds": 130.03356329600047,
+      "calibration_accuracy": 0.916,
+      "calibration_log_loss": 0.30109542012289026,
+      "prepared_sha256": "8f3e5e6d21a11a33030be9e5371c4f5d8437dbf22873f68c9e2c623e89c4d11b",
+      "probabilities_sha256": "dd8d843af30aee0c404a1ccd3f393e00720b0392b2145f8f6b60c77ecc9a4d3c",
+      "protocol_sha256": "f007a48a0e6b4fe297a95fe4ee208f71c0281bfdf9ec15194ffd129266b4cad7",
+      "code": {
+        "common.py": "2fc2c458f8b7c1b36d127b03e493f78a3a87fcd48e767a762a4c78c64015210e",
+        "experts.py": "1d33de340354b83cdb91e7db7cf8a88fbab54b1ca35366ba085ae5f0f5899719",
+        "launch.py": "19064ee5973dbd86987096b6b1b15bf1490a12970b4dac7f2c3493d83a1fbda3",
+        "prepare.py": "e5b54bd6138de9b65fe79c2786981f418ad115de1e51b72f8bb14252ad87f47f"
+      },
+      "environment": {
+        "python": "3.13.14",
+        "platform": "Linux-7.1.5+kali-amd64-x86_64-with-glibc2.43",
+        "numpy": "2.4.6",
+        "scipy": "1.17.1",
+        "sklearn": "1.7.2",
+        "pandas": "2.3.3"
+      },
+      "torch": "2.10.0+cu128",
+      "seed": 20261002
+    }
+  },
+  "scope": "Fixed expert cache. Reproduction re-fits routers only, not base experts or a new test."
+}

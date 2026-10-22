@@ -1,144 +1,196 @@
+% Homework through lecture6. Compile with LuaLaTeX + BibTeX.
 \documentclass{article}
-
-\PassOptionsToPackage{numbers, sort, compress}{natbib}
-\usepackage[main,final]{neurips_2025}
-
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{hyperref}
-\usepackage{url}
-\usepackage{booktabs}
-\usepackage{nicefrac}
-\usepackage{microtype}
-\usepackage{xcolor}
-
-%%%
-
-\usepackage{subcaption}
-\usepackage{graphicx}
-\usepackage{multirow}
-\usepackage{amsmath,amssymb,amsfonts}
-\usepackage{amsthm}
-\usepackage{mathrsfs}
-\usepackage{xcolor}
-\usepackage{textcomp}
-\usepackage{manyfoot}
-\usepackage{algorithm}
-\usepackage{algorithmicx}
-\usepackage{algpseudocode}
-\usepackage{listings}
-
-\newtheorem{theorem}{Theorem} % continuous numbers
-%%\newtheorem{theorem}{Theorem}[section] % sectionwise numbers
-%% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
-\newtheorem{proposition}[theorem]{Proposition}% 
-\newtheorem{lemma}{Lemma}% 
-%%\newtheorem{proposition}{Proposition} % to get separate numbers for theorem and proposition etc.
-
-\newtheorem{example}{Example}
-\newtheorem{remark}{Remark}
-
-\newtheorem{definition}{Definition}
-\newtheorem{assumption}{Assumption}
-
-%%%
-
-
-\title{Title}
-
-
-% The \author macro works with any number of authors. There are two commands
-% used to separate the names and addresses of multiple authors: \And and \AND.
-%
-% Using \And between authors leaves it to LaTeX to determine where to break the
-% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
-% authors names on the first line, and the last on the second line, try using
-% \AND instead of \And before the third author name.
-
-
-\author{
-  Name Surname\\
-  MIPT\\
-  Moscow, Russia\\
-  \texttt{email@phystech.edu}\\
-  \And
-  Name Surname\\
-  MIPT\\
-  Moscow, Russia\\
-  \texttt{email@phystech.edu}\\
-}
-
-
+\PassOptionsToPackage{numbers,sort,compress}{natbib}
+\usepackage[preprint]{neurips_2025}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+\usepackage{amsmath,amssymb,booktabs,graphicx,hyperref}
+\setlength{\emergencystretch}{3em}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\makeatletter
+\renewcommand{\@noticestring}{Материалы ДЗ до шестой лекции. Курс «Моя первая научная статья», осень 2026.}
+\makeatother
+\title{Выбор политики маршрутизации в двухмодельных каскадах:\\
+влияние данных, структуры ошибок и вычислительного бюджета}
+\author{Anastasia Shlopak\\Научный руководитель: Archil Maysuradze, PhD}
 \begin{document}
-
-
 \maketitle
-
 \begin{abstract}
-    TODO
+\input{abstract}
 \end{abstract}
+\noindent\textbf{Ключевые слова:} каскад классификаторов, маршрутизация,
+ожидаемая полезность, парная разметка, совместные ошибки, выбор метода обучения.
 
-\textbf{Keywords:} TODO
+\section{Введение}
+Каскадная обработка позволяет выделять дополнительное вычисление запросам,
+на которых оно полезно. Первая модель отвечает всегда, после чего
+маршрутизатор сохраняет её ответ либо передаёт запрос второму эксперту.
+Поскольку второй эксперт тоже ошибается, более высокая средняя accuracy
+не гарантирует полезность каждого перехода. Исследование посвящено выбору
+способа обучения такого маршрутизатора для заданных данных, пары моделей
+и бюджета.
 
-\section{Introduction}\label{sec:intro}
+Сравнительная полезность эскалации уже формализована в литературе.
+\citet{jitkrittum2023confidence} рассматривают разность вероятностей
+правильности и прямую регрессию signed gain, а также условия достаточности
+confidence-правила. Post-hoc обучение связано с передачей решения
+ошибающемуся эксперту \citep{narasimhan2022posthoc}; для языковых моделей
+изучены token-level признаки \citep{gupta2024cascades} и выбор продолжения
+по ожидаемой полезности \citep{aggarwal2024automix}. Работа опирается
+на эти результаты, а не заявляет новую целевую функцию.
 
-TODO
+Остаётся практический вопрос, как выбирать между оценивателями при
+конечном объёме парной разметки. Разные источники/составы обучения
+по-разному влияют на роутеры \citep{ong2025routellm,niu2026routing}.
+В uplift modeling уже показаны искажение оценки эффекта после
+пересэмплирования и роль поддержки редких событий \citep{nyberg2023exploring}.
+Поэтому требуется объяснить конкретные режимы, а не ограничиваться
+утверждением, что результаты зависят от данных.
 
-\textbf{Contributions.} Our contributions can be summarized as follows:
-\begin{itemize}
-    \item We present...
-    \item We demonstrate the validity of our theoretical results through empirical studies...
-    \item We highlight the implications of our findings for...
-\end{itemize}
+Предлагается фиксировать экспертов и доступные признаки, менять объём
+и состав именно обучения роутера и сравнивать методы при одной квоте
+эскалаций. Дополнительно к accuracy рассматриваются таблицы решений:
+исправленные ошибки, вредные замены, упущенные спасения и предотвращённый
+вред. Цель --- установить условия предпочтительности способов обучения
+и затем проверить рекомендации на новых задачах и парах моделей.
 
-\textbf{Outline.} The rest of the paper is organized as follows...
+Первый эксперимент использует BANKING77 и предвычисленные прогнозы
+независимо обученных классификаторов. В этих материалах оформлены
+постановка и базовое сравнение трёх обучаемых правил с confidence,
+кривая ошибки и описательный пример профилей решений. Профили пока
+не прошли отдельную статистическую проверку; переносимые рекомендации
+ещё не получены. Это текущий этап работы, а не завершённая статья.
 
-\section{Related Work}\label{sec:rw}
+\section{Постановка задачи}
+Даны запросы и эталоны $(x,y)\sim P$, два фиксированных классификатора
+$M_w,M_s$ и парная обучающая разметка их правильности:
+$W=\mathbf1\{M_w(x)\text{ правилен}\}$,
+$S=\mathbf1\{M_s(x)\text{ правилен}\}$, $D=S-W$.
+Роутер использует $z=\phi(x,M_w(x))$, доступные до вызова $M_s$ признаки;
+эталон и текущий ответ второй модели при решении неизвестны.
+После эскалации второй ответ заменяет первый. Искомая полезность:
+\begin{equation}\label{eq:gain}
+\begin{aligned}
+g(z)&=\mathbb E[D\mid z]\\
+&=P(W=0,S=1\mid z)-P(W=1,S=0\mid z).
+\end{aligned}
+\end{equation}
+Спасению соответствует $D=1$, вреду $D=-1$, одинаковой правильности
+обоих ответов $D=0$. Для решения $r(z)\in\{0,1\}$ внешний критерий:
+\begin{equation}\label{eq:quality}
+ Q(r)=\mathbb E[W+r(z)D],\qquad
+ \mathbb E[c_w+c_{\phi,r}+r(z)c_s]\le B.
+\end{equation}
+Первый вызов уже оплачен, добавочная стоимость --- $c_s$.
+В базовом опыте фиксируется ровно $k=\lfloor bN\rfloor$ вторых вызовов
+на batch из $N$ запросов: top-$k$ по оценке gain с общим разрешением ties.
+Это квота, а не проверенный online-порог или денежный бюджет.
 
-\textbf{Topic \#1.}
-TODO
+Для разбора решения относительно противоположного действия определим
+$Z_r=(2r-1)D$ и таблицу $T_{v,a}=\sum_i\mathbf1\{Z_{r,i}=v,r_i=a\}$.
+В колонке эскалации $+1$ означает спасение, $-1$ --- вред; без эскалации
+$+1$ означает предотвращённый вред, $-1$ --- упущенное спасение.
+Нейтральный исход включает как два правильных, так и два ошибочных ответа.
+При числе спасений $R$ и вредных замен $H$ эмпирический прирост accuracy
+равен $(R-H)/N$: таблица раскрывает компоненты агрегированной метрики.
 
-\textbf{Topic \#2.}
-TODO
+Expert-train, router-fit, policy-dev и test разделяются. Scaler и параметры
+роутера обучаются только на выбранном router-fit; регуляризация выбирается
+на dev, test используется для отчёта. В базовом direct-варианте ищется
+функция $f_\theta$ линейного семейства с внутренним MSE-критерием:
+\begin{equation}\label{eq:argmin}
+\widehat\theta_\lambda\in\arg\min_\theta
+\left\{\frac1n\sum_{i=1}^{n}(D_i-f_\theta(z_i))^2+
+\lambda\|\theta_{\mathrm{coef}}\|_2^2\right\}.
+\end{equation}
+Intercept не штрафуется. Для вероятностных голов используется log-loss.
+На уровне всего исследования требуется выбирать способ обучения по
+разрешённым характеристикам train/dev с малой потерей относительно
+лучшего кандидата на новых задачах; этот выбор не делается по test.
 
-\section{Preliminaries}\label{sec:prelim}
+\section{Базовый вычислительный эксперимент}
+\textbf{Цель} --- проверить реализацию и сравнить ошибку и профили решений
+роутеров при фиксированных экспертах/признаках и одинаковой квоте.
+Используется BANKING77: 77 банковских намерений, источник
+\citet{review17}, PolyAI revision
+\texttt{57ec275d8078af65b7731c2a98be812d844a6d6b}, CC BY 4.0.
+После удаления четырёх train-повторов остаётся 9\,999 примеров:
+expert-train 5\,999, calibration 1\,000, router-fit 2\,000, policy-dev 1\,000.
+Official test 3\,080 сохранён; чувствительность без известных текстовых
+пересечений/повтора оценивается на 3\,072 строках. Между train-частями
+пересечений нет. Seeds и SHA зафиксированы в manifest.
 
-\subsection{General notation}
+Две пары: TF--IDF+LR (accuracy 86.56\%) с BERT-tiny (84.71\%) либо
+frozen MiniLM+LR (92.31\%). Все эксперты фиксированы до обучения роутера;
+дорогой эксперт не обязан быть точнее. Сравниваются confidence,
+logistic weak-error, ridge direct и две logistic rescue/harm-головы.
+Восемь признаков: max probability, top-two margin, энтропия, сумма
+квадратов вероятностей, вторая/третья вероятности и log1p длины запроса
+в символах/словах. Правильность экспертов не является входным признаком.
 
-In this section, we introduce the general notation used in the rest of the paper and the basic assumptions. 
+Выполнены fit 200/500/1\,000, dev=fit/2, 10 подвыборок,
+квоты 10/20/40\%. Одинаковые fit/dev строки и tie keys используются всеми
+методами внутри условия. L2-grid: $\{0.001,0.01,0.1,1\}$;
+критерий настройки --- MSE наблюдаемого $D$ на естественном dev.
+Количество доступных пар включает настройку. Линейные/logistic правила
+малые, но не строго capacity-matched.
 
-\subsection{Assumptions} 
+\begin{table}[htbp]\centering
+\caption{TF--IDF $\to$ frozen MiniLM, natural fit 1\,000/dev 500,
+20\% эскалаций. Средние и SD по 10 подвыборкам; SD не является CI
+из независимых задач.}\label{tab:base}
+\input{generated/accuracy_table}
+\end{table}
+\begin{figure}[htbp]\centering
+\includegraphics[width=.82\linewidth]{figures/error_curve.pdf}
+\caption{Ошибка каскада при изменении fit и dev=fit/2,
+TF--IDF $\to$ frozen MiniLM, 20\% эскалаций. Полосы --- SD по 10
+подвыборкам. Кривая построена после выполненного опыта; она не
+выдаётся за доруновый карандашный эскиз.}\label{fig:error}
+\end{figure}
 
-TODO
+Базовый результат приведён в таблице~\ref{tab:base} и на
+рисунке~\ref{fig:error}. При увеличении доступного обучения ошибка
+части правил снижается; различия средних не объявляются значимыми
+на основании одной кривой. Пример на рисунке~\ref{fig:profiles}
+показывает обмен между исправлениями и вредом: confidence исправляет
+123 ответа и портит 102, Events --- в среднем 85.2 и 51.1.
+Вмешательств с изменением правильности меньше в обоих направлениях.
+Это описательный пример, выбранный после просмотра пилота; отдельная
+проверка значимости компонент пока не выполнена. Более широкий
+разбор accuracy с общей статистической поправкой не установил
+убедительного преимущества способов маршрутизации.
 
-\section{Method}\label{sec:method}
+\begin{figure}[htbp]\centering
+\includegraphics[width=\linewidth]{figures/decision_profiles.pdf}
+\caption{Главный рисунок: TF--IDF $\to$ BERT-tiny, fit 1\,000/dev 500,
+20\% вызовов (616 из 3\,080), средние counts по 10 обучениям.
+Строки --- $Z_r$ относительно противоположного действия; колонки ---
+эскалация да/нет. Профили различаются описательно, не доказано
+статистическое превосходство одного правила.}\label{fig:profiles}
+\end{figure}
 
-\section{Experiments}\label{sec:exp}
+\paragraph{Воспроизведение.}
+\url{https://github.com/Nastik05/Cost-sensitive-routing}:
+\texttt{python3 code/run.py} заново обучает роутеры по компактному кэшу,
+проверяет все 1\,440 строк метрик против исходного прогона и строит
+рисунки/таблицу TeX. Это не переобучение экспертов и не новый test.
+Реализация вычислений и рисунков разделена. Числа статьи получаются
+из результатов автоматически; source revision и параметры экспертов
+сохранены в \texttt{code/data/manifest.json}.
 
-To verify the theoretical estimates obtained, we conducted a detailed empirical study...
-
-\section{Discussion}\label{sec:disc}
-
-TODO
-
-\section{Conclusion}\label{sec:concl}
-
-TODO
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Следующий этап.}
+Проверить роль состава обучения и отдельно скорректировать смещение
+отбора, исследовать профили решений и подтвердить рекомендации
+на новых задачах. Малые различия accuracy и отсутствие значимости
+не означают эквивалентность. Сама таблица спасений/вреда не заявляется
+новым методом; исследовательская цель --- условия выбора обучения.
 
 \bibliographystyle{unsrtnat}
 \bibliography{references}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newpage
-\appendix
-\section{Appendix / supplemental material}\label{app}
-
-\subsection{Additional experiments / Proofs of Theorems}\label{app:exp}
-
-TODO
-
 \end{document}
