@@ -1,4 +1,4 @@
-"""Small fixed-expert BANKING77 experiment for homework through lecture6."""
+"""Fixed-expert BANKING77 routing experiment."""
 from pathlib import Path
 import hashlib
 import json

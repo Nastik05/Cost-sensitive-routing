@@ -1,0 +1,37 @@
+% Build with LuaLaTeX + BibTeX: python3 code/build_documents.py
+\documentclass{article}
+\PassOptionsToPackage{numbers,sort,compress}{natbib}
+\usepackage[preprint]{neurips_2025}
+\usepackage{fontspec}
+\setmainfont{Liberation Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\setotherlanguage{english}
+\usepackage{amsmath,amssymb,booktabs,graphicx,hyperref}
+\renewenvironment{abstract}{\begin{center}\bfseries Аннотация\end{center}\begin{quote}\small}{\end{quote}}
+\setlength{\emergencystretch}{3em}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,
+pdftitle={Выбор политики маршрутизации в двухмодельных каскадах},pdfauthor={Anastasia Shlopak}}
+\makeatletter
+\renewcommand{\@noticestring}{Рабочая версия.}
+\makeatother
+\title{Выбор политики маршрутизации в двухмодельных каскадах:\\
+влияние данных, структуры ошибок и вычислительного бюджета}
+\author{Anastasia Shlopak\\Научный руководитель: Archil Maysuradze, PhD}
+\begin{document}
+\maketitle
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+\noindent\textbf{Ключевые слова:} каскад классификаторов, маршрутизация,
+ожидаемая полезность, парная разметка, совместные ошибки, выбор метода обучения.
+
+\input{introduction}
+\input{problem_statement}
+\input{experiments}
+
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+\end{document}

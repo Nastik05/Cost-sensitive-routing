@@ -1,4 +1,4 @@
-"""Checks for the limited homework experiment and counterfactual conventions."""
+"""Checks for the routing experiment and counterfactual outcome conventions."""
 import json
 import numpy as np
 import pandas as pd
