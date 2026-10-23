@@ -43,7 +43,7 @@ g(z)&=\mathbb E[D\mid z]\\
 $c_s$ --- дополнительный второй вызов. В базовом опыте вместо
 измеренного денежного бюджета используется одинаковая для всех методов
 квота: ровно $k=\lfloor bN\rfloor$ вызовов на пакет из $N$ запросов.
-Выбираются top-$k$ оценок с общим разрешением равных scores.
+Выбираются top - $k$ оценок с общим разрешением равных scores.
 Это пакетный отбор, а не проверенный порог для online-потока.
 
 Профиль принятого решения относительно противоположного действия
@@ -69,8 +69,10 @@ accuracy равен $(R-H)/N$. Поэтому таблица раскрывае�
 не штрафуется. Внутренняя задача:
 \begin{equation}\label{eq:argmin}
 \widehat\theta_\lambda\in\arg\min_\theta
-\left\{\frac1n\sum_{i=1}^{n}(D_i-f_\theta(z_i))^2+
-\lambda\|\theta_{\mathrm{coef}}\|_2^2\right\}.
+\left\lbrace
+\frac1n\sum_{i=1}^{n}(D_i-f_\theta(z_i))^2+
+\lambda\|\theta_{\mathrm{coef}}\|_2^2
+\right\rbrace.
 \end{equation}
 
 Основная исследовательская задача --- выбор способа обучения
@@ -83,8 +85,9 @@ $a\in\mathcal A$ по разрешённым характеристикам да
 $a_\tau^*\in\arg\max_{a\in\mathcal A}Q_\tau(r_{\tau,a})$
 задача выбора записывается как
 \begin{equation}\label{eq:selection}
-\pi^*\in\arg\min_{\pi\in\Pi}
-\mathbb E_\tau\left[Q_\tau(r_{\tau,a_\tau^*})-
-Q_\tau(r_{\tau,\pi(d_\tau)})\right]
+\pi^* \in \mathop{\mathrm{arg\,min}}\limits_{\pi\in\Pi}
+\mathbb{E}_\tau
+\bigl[\,Q_\tau(r_{\tau,a_\tau^*})-
+Q_\tau(r_{\tau,\pi(d_\tau)})\,\bigr]
 \end{equation}
 при сопоставимом бюджете парной разметки, включая настройку.
