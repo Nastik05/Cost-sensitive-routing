@@ -1,0 +1,29 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\usepackage{fontspec}
+\setsansfont{DejaVu Sans}
+\usepackage{polyglossia}
+\setdefaultlanguage{russian}
+\usepackage{graphicx}
+\definecolor{ink}{HTML}{17324D}
+\definecolor{accent}{HTML}{277D77}
+\setbeamercolor{normal text}{fg=ink,bg=white}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{}
+\setbeamersize{text margin left=.55cm,text margin right=.55cm}
+\begin{document}
+\begin{frame}[t,plain]
+{\fontsize{15}{18}\selectfont\bfseries Отбор парных исходов меняет цель роутера}\par
+\vspace{.12cm}
+{\fontsize{8}{10}\selectfont Anastasia Shlopak \hfill Руководитель: Archil Maysuradze, PhD}\par
+\vspace{.2cm}
+{\small\textbf{Контроль:} те же эксперты, признаки и fit-строки; меняются веса потери.}\par
+\centering
+\includegraphics[width=\linewidth,height=4.3cm,keepaspectratio]{../paper/figures/sampling_correction.pdf}\par
+{\fontsize{8}{10}\selectfont BANKING77 · 2 пары · 1\,000 извлечений · 30 повторений · 20\% вызовов}\par
+\vspace{.15cm}
+{\small\color{accent}\bfseries IPW устраняет провал harm-rich: +1,1 и +4,95 п.п.}\par
+\vspace{.12cm}
+{\fontsize{8}{10}\selectfont Выигрыш над тем же обучением без коррекции; уровень natural восстанавливается.\newline
+Общая поправка на 14 сравнений. Один ранее изученный test; перенос ещё не проверен.}
+\end{frame}
+\end{document}

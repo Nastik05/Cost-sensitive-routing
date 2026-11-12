@@ -22,9 +22,38 @@ python3 -m venv .venv
 .venv/bin/python code/build_documents.py
 ```
 
-Нужны LuaLaTeX, BibTeX, fontspec/polyglossia/beamer и шрифты Liberation Serif, DejaVu Sans. Pandoc включён в зависимость `pypandoc_binary`. Готовые PDF уже включены. Сборка создаёт `paper/main.pdf`, недостающие Markdown-версии разделов в `paper/paper_sections/` и `slides/main.pdf`.
+Нужны LuaLaTeX, BibTeX, fontspec/polyglossia/beamer/TikZ и шрифты Liberation Serif, DejaVu Sans. Pandoc включён в зависимость `pypandoc_binary`. Готовые PDF уже включены. Сборка создаёт `paper/main.pdf`, недостающие Markdown-версии разделов в `paper/paper_sections/`, `slides/main.pdf` и `slides/one_slide.pdf`.
 
-Исходники разделов находятся в `paper/paper_sections/`: `abstract.tex`, `introduction.tex`, `related_works.tex`, `problem_statement.tex` и `experiments.tex`. `paper/main.tex` подключает их, причём обзор литературы идёт сразу после введения. Markdown-файлы предназначены для чтения на GitHub. Обычная сборка сохраняет существующие Markdown-файлы, чтобы не затереть ручные правки автора. Для явного обновления всех Markdown-версий из TeX используется `python3 code/build_documents.py --refresh-markdown`; перед этим правки нужно синхронизировать с TeX.
+Исходники разделов находятся в `paper/paper_sections/`: `abstract.tex`, `introduction.tex`, `related_works.tex`, `problem_statement.tex`, `method.tex`, `experiments.tex` и `conclusion.tex`. `paper/main.tex` подключает их; обзор идёт после введения, метод — после постановки. Markdown-файлы предназначены для чтения на GitHub. Обычная сборка сохраняет существующие Markdown-файлы. Для явного обновления из TeX используется `python3 code/build_documents.py --refresh-markdown`; перед этим ручные правки нужно синхронизировать с TeX. Можно ограничить обновление, например `--refresh-markdown --section method --section experiments`.
+
+## Контроль состава и выбора метода
+
+Полное описание: [протокол](PROTOCOL_FOLLOWUP.md). Вход — тот же кэш экспертов; новый отбор с возвращением, известные вероятности, 30 seeds и раздельные tuning/selector-dev.
+
+```bash
+.venv/bin/python code/followup.py
+.venv/bin/python code/analyze_followup.py
+.venv/bin/python code/build_documents.py
+```
+
+`followup.py` обучает 2700 финальных роутеров, сохраняет выбранные модели, параметры стандартизации, кратности fit-строк, test scores и метрики. Результаты по умолчанию находятся в `code/results/followup/`. Выполненные условия проверяются по хешам и пропускаются при повторном запуске; изменение вычислительного кода, протокола или окружения требует нового каталога через `--output`.
+
+`analyze_followup.py` повторно загружает все модели, сверяет scores и 18360 строк тестовых метрик, затем выполняет 2000 bootstrap повторов и строит всю заранее заданную семью 14 контрастов. Для повторного построения рисунков без обучения и bootstrap: `python3 code/analyze_followup.py --plots-only`. Здесь тоже поддерживается `--output` для выбора каталога исходных результатов.
+
+Публикуемые данные:
+
+- [Полные метрики](../paper/generated/followup_metrics.csv.gz), [средние и SD](../paper/generated/followup_summary.csv).
+- [Все контрасты](../paper/generated/followup_contrasts.csv), [частоты выбора](../paper/generated/selection_counts.csv), [потеря выбора](../paper/generated/selection_regret.csv).
+- [Чувствительность harm-rich к квоте и clean test](../paper/generated/followup_sensitivity.csv).
+- [Уникальные строки, ESS и время](../paper/generated/followup_fit_summary.csv), [хеши, протокол и аудит](../paper/generated/followup_manifest.json).
+
+Сырые модели и scores воспроизводятся командами выше; в репозиторий включены компактные исходные данные и численные результаты. Это анализ фиксированных экспертов и ранее изученного test. Два протокола (исходный без возвращения и новый с возвращением) не смешиваются.
+
+Проверки:
+
+```bash
+OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest -q -p no:cacheprovider code/test_experiment.py code/test_followup.py
+```
 
 ## Данные
 

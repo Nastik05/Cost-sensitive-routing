@@ -1,39 +1,203 @@
 \documentclass[aspectratio=169,11pt]{beamer}
 \usepackage{fontspec}
 \setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
 \usepackage{polyglossia}
 \setdefaultlanguage{russian}
-\usepackage{graphicx}
+\usepackage{amsmath,booktabs,graphicx,tikz}
+\usetikzlibrary{arrows.meta,positioning}
 \definecolor{ink}{HTML}{17324D}
 \definecolor{accent}{HTML}{277D77}
+\definecolor{warm}{HTML}{BD5B35}
 \setbeamercolor{normal text}{fg=ink,bg=white}
+\setbeamercolor{frametitle}{fg=ink}
+\setbeamercolor{structure}{fg=accent}
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{footline}{}
-\setbeamerfont{normal text}{size=\small}
-\setbeamersize{text margin left=.55cm,text margin right=.55cm}
+\setbeamertemplate{footline}{\hfill\scriptsize\insertframenumber\hspace{.5cm}\vspace{.2cm}}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamersize{text margin left=.6cm,text margin right=.6cm}
+\tikzset{box/.style={draw=accent,rounded corners,fill=accent!7,align=center,minimum height=.85cm,text width=2.7cm,font=\small},
+ arr/.style={-{Stealth},thick,draw=ink}}
+\newcommand{\takeaway}[1]{\par\vspace{.12cm}{\small\color{accent}\bfseries #1}\par}
+\newcommand{\source}[1]{\par\vspace{.06cm}{\fontsize{7}{9}\selectfont #1}\par}
 \begin{document}
-\begin{frame}[t,plain]
-{\fontsize{15}{18}\selectfont\bfseries Обучение роутера: исправления и вред}\par
-\vspace{.1cm}
-{\fontsize{8}{10}\selectfont Anastasia Shlopak \hfill Руководитель: Archil Maysuradze, PhD}\par
-\vspace{.14cm}
-{\fontsize{10}{12}\selectfont\textbf{Цель:} выбор обучения роутера по данным, паре моделей и бюджету.}\par
-\vspace{.12cm}
-{\fontsize{9}{11}\selectfont\textcolor{accent}{Контроль:} фиксируем экспертов и признаки; меняем объём и состав train.}\par
-\vspace{.03cm}
-{\centering
-\includegraphics[height=3.0cm]{../paper/figures/decision_profiles.pdf}
-\par}
-\vspace{-.2cm}
-{\fontsize{7.5}{9}\selectfont BANKING77: TF--IDF $\to$ BERT-tiny; 20\% вызовов; fit 1000/dev 500; 10 обучений.}\par
-\vspace{.13cm}
-{\fontsize{8.5}{10.5}\selectfont Строки: $+1$ --- выбор лучше альтернативы;
-$-1$ --- хуже; $0$ --- правильность совпадает.}\par
-\vspace{.17cm}
-{\fontsize{10}{12}\selectfont\textbf{Наблюдение:} Events реже исправляет \emph{и} реже портит ответы.}\par
-\vspace{.1cm}
-{\fontsize{7.5}{9}\selectfont Профиль описательный; различия accuracy после общей поправки не установлены.}\par
-\vspace{.15cm}
-{\fontsize{8.5}{10.5}\selectfont\textcolor{accent}{Далее:} проверить компоненты, коррекцию отбора и перенос рекомендаций.}
+
+\begin{frame}{Состав разметки меняет цель маршрутизатора}
+{\small Выбор политики в двухмодельных каскадах:\
+данные, совместные ошибки и квота вызовов}\par\medskip
+{\small Anastasia Shlopak\hfill Archil Maysuradze, PhD}\par\bigskip
+\centering
+\begin{tikzpicture}[node distance=.7cm]
+\node[box] (a) {Первая модель\\отвечает всегда};
+\node[box,right=of a] (b) {Роутер\\оценивает пользу};
+\node[box,right=of b] (c) {Вторая модель\\заменяет ответ};
+\draw[arr] (a)--(b);\draw[arr] (b)--node[above,font=\scriptsize]{20\%}(c);
+\end{tikzpicture}
+\bigskip
+\takeaway{Коррекция отбора восстанавливает качество;\newline выбор метода по малому dev остаётся неточным.}
+\source{BANKING77 · две фиксированные пары · контролируемое сравнение}
+\end{frame}
+
+\begin{frame}{Известная полезность ещё не задаёт способ обучения}
+\small
+\centering
+\renewcommand{\arraystretch}{1.55}
+\begin{tabular}{p{3.2cm}p{4.2cm}p{5.0cm}}
+\toprule
+Основание & Что известно & Наш контроль \\
+\midrule
+Jitkrittum et al., 2023 & Регрессия разности правильности; confidence & Фиксируем признаки и экспертов \\
+Nyberg \& Klami, 2023 & Отбор меняет оценку эффекта & Известные вероятности парных исходов \\
+Mahajan et al., 2024 & Качество выбора оценивателя & Отдельный dev для выбора метода \\
+\bottomrule
+\end{tabular}
+\bigskip
+\takeaway{Сравниваем цель обучения и процедуру выбора, а не новую архитектуру.}
+\source{NeurIPS 2023; Data Mining and Knowledge Discovery 2023; ICLR 2024. Полные ссылки — в статье.}
+\end{frame}
+
+\begin{frame}{Нужно оценивать спасения за вычетом вреда}
+\begin{columns}[T]
+\begin{column}{.49\textwidth}
+\centering\small
+\textbf{Парная разметка исходов}\par\medskip
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.7}
+\begin{tabular}{lcc}
+\toprule
+ & Второй: 0 & Второй: 1 \\
+\midrule
+Первый: 0 & 0 & \textcolor{accent}{+1: спасение} \\
+Первый: 1 & \textcolor{warm}{−1: вред} & 0 \\
+\bottomrule
+\end{tabular}
+\source{0 — ошибка; 1 — правильный ответ.}
+\end{column}
+\begin{column}{.46\textwidth}
+\small Первый исход $W$, второй $S$; $D=S-W$.
+\[
+g(z)=\mathbb E[D\mid z]
+\]
+\centering
+\begin{tikzpicture}[node distance=.65cm]
+\node[box] (a) {Оценить $g(z)$};
+\node[box,below=of a] (b) {Выбрать top-$k$};
+\draw[arr] (a)--(b);
+\end{tikzpicture}
+\end{column}
+\end{columns}
+\bigskip
+\takeaway{При ровно $k$ вызовах top-$k$ максимизирует ожидаемое качество.}
+\source{Признаки доступны до второго вызова. Равная квота, не измеренный денежный бюджет.}
+\end{frame}
+
+\begin{frame}{Настройка и выбор метода используют разные данные}
+\centering
+\begin{tikzpicture}[node distance=.55cm]
+\node[box,text width=3.3cm] (a) {Пул: 2\,000 пар\\fit: 200 / 500 / 1\,000};
+\node[box,text width=3.3cm,right=of a] (b) {Tuning: 100 / 250 / 500\\выбор регуляризации};
+\node[box,text width=3.3cm,right=of b] (c) {Selector: 500\\выбор одного из 4 методов};
+\draw[arr] (a)--(b);\draw[arr] (b)--(c);
+\node[box,below=1cm of b,text width=5cm] (d) {Test: 3\,080 запросов\\616 вызовов при квоте 20\%};
+\draw[arr] (c.south)|-(d.east);
+\end{tikzpicture}
+\medskip
+\begin{tabular}{ccc}
+TF--IDF $\to$ BERT-tiny & TF--IDF $\to$ MiniLM & 30 повторений
+\end{tabular}
+\takeaway{Эксперты и восемь признаков фиксированы; test не выбирает роутер.}
+\source{Квоты 10/20/40\%; основной режим — 20\%. Это повторный анализ ранее изученного теста.}
+\end{frame}
+
+\begin{frame}{Одинаковые примеры позволяют выделить эффект весов}
+\begin{columns}[T]
+\begin{column}{.46\textwidth}
+\footnotesize\centering
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{lccc}
+\toprule
+Отбор & Rescue & Neutral & Harm \\
+\midrule
+Natural & 1 & 1 & 1 \\
+Rescue-rich & 4 & 1 & 1 \\
+Harm-rich & 1 & 1 & 8 \\
+Discordant & 4 & 1 & 4 \\
+\bottomrule
+\end{tabular}
+\source{Множители вероятностей извлечения.\newline Отбор с возвращением.}
+\end{column}
+\begin{column}{.52\textwidth}
+\centering
+\begin{tikzpicture}[node distance=.6cm]
+\node[box] (a) {Одни fit-строки};
+\node[box,below left=.8cm and -.8cm of a,text width=2.5cm] (b) {Обычная потеря};
+\node[box,below right=.8cm and -.8cm of a,text width=2.5cm] (c) {Потеря с IPW};
+\draw[arr] (a)--(b);\draw[arr] (a)--(c);
+\end{tikzpicture}
+\small
+\[u_i=\frac{1}{N_0\rho_i}\]
+\source{$\rho_i$ — вероятность извлечения строки.}
+\end{column}
+\end{columns}
+\bigskip
+\takeaway{IPW восстанавливает риск исходного пула, но не гарантирует прирост accuracy.}
+\source{Полностью размеченный пул известен заранее; экономия приобретения разметки не заявляется.}
+\end{frame}
+
+\begin{frame}{Больше данных уменьшает контрольную ошибку}
+\small Natural; Direct и Events; среднее и SD по 30 повторениям.
+\centering\par
+\includegraphics[width=.97\linewidth,height=5cm,keepaspectratio]{../paper/figures/learning_train_test.pdf}
+\takeaway{Разрыв train/test сокращается, но различия методов остаются малы.}
+\source{MSE прироста качества. Пунктир — train, сплошная линия — test. Разброс по seeds, не доверительный интервал.}
+\end{frame}
+
+\begin{frame}{Коррекция устраняет провал harm-rich обучения}
+\small 1\,000 извлечений; квота 20\%; те же строки с весами и без.
+\centering\par
+\includegraphics[width=.97\linewidth,height=4.7cm,keepaspectratio]{../paper/figures/sampling_correction.pdf}
+\takeaway{IPW: около +1,1 п.п. для BERT-tiny и +4,95 п.п. для MiniLM.}
+\source{Все четыре harm-контраста поддержаны общей max-$|t|$ поправкой на 14 сравнений; 2\,000 bootstrap повторов.\newline Это восстановление уровня natural, а не выигрыш над natural.}
+\end{frame}
+
+\begin{frame}{Лидер средних зависит от пары экспертов}
+\small Natural; 1\,000 fit-извлечений; accuracy, \%; среднее $\pm$ SD.
+\centering\par\bigskip
+\renewcommand{\arraystretch}{1.5}
+\input{../paper/generated/followup_slide_table}
+\bigskip
+\takeaway{Оценивать нужно и кандидатов, и качество правила их выбора.}
+\source{Dev-selector выбирает из четырёх методов по отдельной валидационной выборке.\newline Порядок средних не является тестом статистического превосходства.}
+\end{frame}
+
+\begin{frame}{500 dev-примеров не обеспечивают надёжный выбор}
+\small Частота выбора при квоте 20\%; 30 повторений.
+\centering\par
+\includegraphics[width=.97\linewidth,height=4.5cm,keepaspectratio]{../paper/figures/method_selection.pdf}
+\takeaway{Средняя потеря выбора: 0,34–0,36 п.п.; в худшем повторе — 1,04 п.п.}
+\source{Fit 1\,000. Потеря относительно test-oracle среди тех же fitted candidates; oracle недоступен при выборе.\newline Selector−confidence: +0,37 п.п. для BERT (интервал включает 0), +0,48 п.п. для MiniLM (не включает 0).}
+\end{frame}
+
+\begin{frame}{Сначала проверить цель, затем выбирать сложность}
+\centering
+\begin{tikzpicture}[node distance=.6cm]
+\node[box,text width=3.4cm] (a) {Проверить отбор\\известны ли вероятности?};
+\node[box,text width=3.4cm,right=of a] (b) {Сравнить кандидатов\\на естественном dev};
+\node[box,text width=3.4cm,right=of b] (c) {Проверить перенос\\на новой задаче};
+\draw[arr] (a)--(b);\draw[arr] (b)--(c);
+\end{tikzpicture}
+\bigskip
+\takeaway{Коррекция отбора восстанавливает качество;\newline выбор метода по малому dev остаётся неточным.}
+\bigskip
+\small Один датасет и фиксированные эксперты ограничивают перенос вывода.
+\source{Статья, код, протокол и результаты:\newline\url{https://github.com/Nastik05/Cost-sensitive-routing}}
+\end{frame}
+
+\appendix
+\begin{frame}{Резерв: вся семья из 14 контрастов}
+\centering
+\includegraphics[height=6.1cm,width=.96\linewidth,keepaspectratio]{../paper/figures/correction_intervals.pdf}
+\source{Одновременные 95\% интервалы; corrected−raw, для selector — selector−confidence.}
 \end{frame}
 \end{document}
