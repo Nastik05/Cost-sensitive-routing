@@ -3,7 +3,7 @@
 \setsansfont{DejaVu Sans}
 \usepackage{polyglossia}
 \setdefaultlanguage{russian}
-\usepackage{graphicx}
+\usepackage{booktabs}
 \definecolor{ink}{HTML}{17324D}
 \definecolor{accent}{HTML}{277D77}
 \setbeamercolor{normal text}{fg=ink,bg=white}
@@ -12,18 +12,20 @@
 \setbeamersize{text margin left=.55cm,text margin right=.55cm}
 \begin{document}
 \begin{frame}[t,plain]
-{\fontsize{15}{18}\selectfont\bfseries Отбор парных исходов меняет цель роутера}\par
+{\fontsize{14}{17}\selectfont\bfseries Выбор роутера при дисбалансе обучения}\par
 \vspace{.12cm}
 {\fontsize{8}{10}\selectfont Anastasia Shlopak \hfill Руководитель: Archil Maysuradze, PhD}\par
-\vspace{.2cm}
-{\small\textbf{Контроль:} те же эксперты, признаки и fit-строки; меняются веса потери.}\par
-\centering
-\includegraphics[width=\linewidth,height=4.3cm,keepaspectratio]{../paper/figures/sampling_correction.pdf}\par
-{\fontsize{8}{10}\selectfont BANKING77 · 2 пары · 1\,000 извлечений · 30 повторений · 20\% вызовов}\par
 \vspace{.15cm}
-{\small\color{accent}\bfseries IPW устраняет провал harm-rich: +1,1 и +4,95 п.п.}\par
+{\small Все 8 обучаемых методов · 21 пара · 7 составов · 20 повторений}\par
+\vspace{.08cm}\centering\fontsize{8}{9}\selectfont
+\renewcommand{\arraystretch}{1.05}
+\input{../paper/generated/imbalance_accuracy_table}\par
+\vspace{.08cm}
+{\fontsize{8}{10}\selectfont Средняя accuracy, \%; fit 1\,000; квота 20\%. Два примера из полного контроля.}\par
+\vspace{.15cm}
+{\small\color{accent}\bfseries Harm-дисбаланс разделяет gain-цели и weak-error/confidence.}\par
 \vspace{.12cm}
-{\fontsize{8}{10}\selectfont Выигрыш над тем же обучением без коррекции; уровень natural восстанавливается.\newline
-Общая поправка на 14 сравнений. Один ранее изученный test; перенос ещё не проверен.}
+{\fontsize{8}{10}\selectfont 56 взаимодействий после общей поправки; между семью gain-методами — 0 из 882.\newline
+Различие чувствительности не означает надёжную смену победителя. Перенос ещё не проверен.}
 \end{frame}
 \end{document}

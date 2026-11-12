@@ -36,7 +36,8 @@ def main():
     sections = [("abstract.tex","аннотация.md"),("introduction.tex","введение.md"),
                 ("related_works.tex","related_works.md"),
                 ("problem_statement.tex","постановка задачи.md"),("method.tex","method.md"),
-                ("experiments.tex","вычислительные эксперименты.md"),("conclusion.tex","conclusion.md")]
+                ("experiments.tex","вычислительные эксперименты.md"),
+                ("router_comparison.tex","router_comparison.md"),("conclusion.tex","conclusion.md")]
     pandoc = pypandoc.get_pandoc_path()
 
     def markdown(tex,heading_shift=0):
@@ -61,6 +62,8 @@ def main():
             text = text.replace(source, "[«Метод и теоретические основания»](method.md)")
         text = text.replace(r"[\[eq:selection_shift\]](#eq:selection_shift)",
                             "[изменения цели при отборе](method.md#почему-отбор-исходов-меняет-обучающую-цель)")
+        text = text.replace(r"[\[tab:all_methods\]](#tab:all_methods)",
+                            "[полного набора методов](method.md#модели-и-критерии-обучения)")
         # Pandoc preserves physical newlines inside some inline TeX expressions.
         text = re.sub(r"(?<!\$)\$(?!\$)([^$]+)\$(?!\$)",
                       lambda m: "$"+re.sub(r"\s*\n\s*", " ", m.group(1))+"$", text)
@@ -77,7 +80,12 @@ def main():
         tex = (section_dir / source).read_text()
         if source == "abstract.tex":
             tex = "\\section*{Аннотация}\n" + tex
-        target_path.write_text(markdown(tex))
+        text = markdown(tex)
+        if source == "router_comparison.tex":
+            # GFM has no column spanning; use the same data with flat headers.
+            flat = (paper / "generated/imbalance_accuracy_table.md").read_text().strip()
+            text = re.sub(r"(?m)^\|  \|.*?(?=\n\n)", lambda m: flat, text, count=1, flags=re.S)
+        target_path.write_text(text)
     print("Built paper/main.pdf and section views in paper/paper_sections/")
 
 

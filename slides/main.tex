@@ -22,7 +22,7 @@
 \newcommand{\source}[1]{\par\vspace{.06cm}{\fontsize{7}{9}\selectfont #1}\par}
 \begin{document}
 
-\begin{frame}{Состав разметки меняет цель маршрутизатора}
+\begin{frame}{Выбор маршрутизатора зависит от состава данных}
 {\small Выбор политики в двухмодельных каскадах:\
 данные, совместные ошибки и квота вызовов}\par\medskip
 {\small Anastasia Shlopak\hfill Archil Maysuradze, PhD}\par\bigskip
@@ -34,26 +34,31 @@
 \draw[arr] (a)--(b);\draw[arr] (b)--node[above,font=\scriptsize]{20\%}(c);
 \end{tikzpicture}
 \bigskip
-\takeaway{Коррекция отбора восстанавливает качество;\newline выбор метода по малому dev остаётся неточным.}
-\source{BANKING77 · две фиксированные пары · контролируемое сравнение}
+\takeaway{Дисбаланс разделяет семейства обучающих целей;\newline выбор среди gain-оценивателей требует дальнейшей проверки.}
+\source{BANKING77 · 21 фиксированная пара · полный набор методов}
 \end{frame}
 
-\begin{frame}{Известная полезность ещё не задаёт способ обучения}
+\begin{frame}{Семь методов оценивают одну полезность}
 \small
 \centering
-\renewcommand{\arraystretch}{1.55}
-\begin{tabular}{p{3.2cm}p{4.2cm}p{5.0cm}}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lp{9cm}}
 \toprule
-Основание & Что известно & Наш контроль \\
+Метод & Обучающая цель / представление \\
 \midrule
-Jitkrittum et al., 2023 & Регрессия разности правильности; confidence & Фиксируем признаки и экспертов \\
-Nyberg \& Klami, 2023 & Отбор меняет оценку эффекта & Известные вероятности парных исходов \\
-Mahajan et al., 2024 & Качество выбора оценивателя & Отдельный dev для выбора метода \\
+Direct & Прямая регрессия прироста \\
+Marginal & Две оценки правильности \\
+Events & Спасение и вред отдельными головами \\
+Ternary & Три значения прироста \\
+Joint & Четыре совместных исхода экспертов \\
+Hurdle & Наличие расхождения и его направление \\
+Soft-gain & Мягкая метка прироста \\
+Weak-error & Ошибка первого эксперта: отдельная proxy-цель \\
 \bottomrule
 \end{tabular}
-\bigskip
-\takeaway{Сравниваем цель обучения и процедуру выбора, а не новую архитектуру.}
-\source{NeurIPS 2023; Data Mining and Knowledge Discovery 2023; ICLR 2024. Полные ссылки — в статье.}
+\medskip
+\takeaway{Различаем выбор семейства цели и выбор параметризации внутри gain.}
+\source{Confidence и random — необучаемые контроли. Основания: Jitkrittum et al., 2023; Nyberg \& Klami, 2023.}
 \end{frame}
 
 \begin{frame}{Нужно оценивать спасения за вычетом вреда}
@@ -96,14 +101,14 @@ g(z)=\mathbb E[D\mid z]
 \begin{tikzpicture}[node distance=.55cm]
 \node[box,text width=3.3cm] (a) {Пул: 2\,000 пар\\fit: 200 / 500 / 1\,000};
 \node[box,text width=3.3cm,right=of a] (b) {Tuning: 100 / 250 / 500\\выбор регуляризации};
-\node[box,text width=3.3cm,right=of b] (c) {Selector: 500\\выбор одного из 4 методов};
+\node[box,text width=3.3cm,right=of b] (c) {Selector: 500\\выбор одного из 9 правил};
 \draw[arr] (a)--(b);\draw[arr] (b)--(c);
 \node[box,below=1cm of b,text width=5cm] (d) {Test: 3\,080 запросов\\616 вызовов при квоте 20\%};
 \draw[arr] (c.south)|-(d.east);
 \end{tikzpicture}
 \medskip
 \begin{tabular}{ccc}
-TF--IDF $\to$ BERT-tiny & TF--IDF $\to$ MiniLM & 30 повторений
+7 экспертов & 21 зависимая пара & 20 повторений
 \end{tabular}
 \takeaway{Эксперты и восемь признаков фиксированы; test не выбирает роутер.}
 \source{Квоты 10/20/40\%; основной режим — 20\%. Это повторный анализ ранее изученного теста.}
@@ -120,9 +125,10 @@ TF--IDF $\to$ BERT-tiny & TF--IDF $\to$ MiniLM & 30 повторений
 Отбор & Rescue & Neutral & Harm \\
 \midrule
 Natural & 1 & 1 & 1 \\
-Rescue-rich & 4 & 1 & 1 \\
-Harm-rich & 1 & 1 & 8 \\
-Discordant & 4 & 1 & 4 \\
+Rescue-rich & 2 / 8 & 1 & 1 \\
+Harm-rich & 1 & 1 & 2 / 8 \\
+Discordant & 8 & 1 & 8 \\
+Neutral & 1 & 8 & 1 \\
 \bottomrule
 \end{tabular}
 \source{Множители вероятностей извлечения.\newline Отбор с возвращением.}
@@ -141,63 +147,77 @@ Discordant & 4 & 1 & 4 \\
 \end{column}
 \end{columns}
 \bigskip
-\takeaway{IPW восстанавливает риск исходного пула, но не гарантирует прирост accuracy.}
-\source{Полностью размеченный пул известен заранее; экономия приобретения разметки не заявляется.}
+\takeaway{Главная проверка — меняется ли разность качества двух методов.}
+\source{7 составов и 4 IPW-контроля у всех методов. Известна разметка полного пула; экономия acquisition не заявляется.}
 \end{frame}
 
-\begin{frame}{Больше данных уменьшает контрольную ошибку}
-\small Natural; Direct и Events; среднее и SD по 30 повторениям.
+\begin{frame}{Профили решений мотивируют проверку дисбаланса}
+\small Natural; все девять правил; среднее и SD по 20 повторениям.
 \centering\par
-\includegraphics[width=.97\linewidth,height=5cm,keepaspectratio]{../paper/figures/learning_train_test.pdf}
-\takeaway{Разрыв train/test сокращается, но различия методов остаются малы.}
-\source{MSE прироста качества. Пунктир — train, сплошная линия — test. Разброс по seeds, не доверительный интервал.}
+\includegraphics[width=.97\linewidth,height=5cm,keepaspectratio]{../paper/figures/imbalance_natural_profiles.pdf}
+\takeaway{Итоговая accuracy зависит от спасений за вычетом вреда.}
+\source{При фиксированной квоте precision и recall спасений связаны. Различия профилей описательные:\newline после общей поправки их статистическая значимость не установлена.}
 \end{frame}
 
-\begin{frame}{Коррекция устраняет провал harm-rich обучения}
-\small 1\,000 извлечений; квота 20\%; те же строки с весами и без.
+\begin{frame}{Harm-дисбаланс разделяет семейства целей}
+\small 1\,000 извлечений; квота 20\%; средняя accuracy, \%, по 20 seeds.
 \centering\par
-\includegraphics[width=.97\linewidth,height=4.7cm,keepaspectratio]{../paper/figures/sampling_correction.pdf}
-\takeaway{IPW: около +1,1 п.п. для BERT-tiny и +4,95 п.п. для MiniLM.}
-\source{Все четыре harm-контраста поддержаны общей max-$|t|$ поправкой на 14 сравнений; 2\,000 bootstrap повторов.\newline Это восстановление уровня natural, а не выигрыш над natural.}
+\medskip\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\input{../paper/generated/imbalance_accuracy_table}
+\medskip
+\takeaway{MiniLM: gain-методы $\approx$86,5\%; weak-error $\approx$91,25\%.}
+\source{Confidence не зависит от train. Это неодинаковое ухудшение, а не улучшение качества за счёт обогащения.}
 \end{frame}
 
-\begin{frame}{Лидер средних зависит от пары экспертов}
-\small Natural; 1\,000 fit-извлечений; accuracy, \%; среднее $\pm$ SD.
+\begin{frame}{Разная чувствительность подтверждена не у всех}
+\small Все 21 пары; fit 1\,000; квота 20\%; одна общая поправка.
 \centering\par\bigskip
 \renewcommand{\arraystretch}{1.5}
-\input{../paper/generated/followup_slide_table}
+\begin{tabular}{lr}
+\toprule
+Проверка & Различимые контрасты \\
+\midrule
+Accuracy в natural & 0 / 756 \\
+Взаимодействие, все правила & 56 / 1\,512 \\
+Взаимодействие внутри семи gain-методов & 0 / 882 \\
+Простые gain-различия в harm8 & 4 / 441 \\
+\bottomrule
+\end{tabular}
 \bigskip
-\takeaway{Оценивать нужно и кандидатов, и качество правила их выбора.}
-\source{Dev-selector выбирает из четырёх методов по отдельной валидационной выборке.\newline Порядок средних не является тестом статистического превосходства.}
+\takeaway{56 взаимодействий относятся к сравнению gain с weak-error/confidence.}
+\source{Полная семья: 5\,691 контраст, 2\,000 paired bootstrap повторов. Незначимость не доказывает равенство.}
 \end{frame}
 
-\begin{frame}{500 dev-примеров не обеспечивают надёжный выбор}
-\small Частота выбора при квоте 20\%; 30 повторений.
+\begin{frame}{Различие в режиме ещё не доказывает взаимодействие}
+\small TF10 $\to$ полный TF--IDF; fit 1\,000; квота 20\%; accuracy, \%.
 \centering\par
-\includegraphics[width=.97\linewidth,height=4.5cm,keepaspectratio]{../paper/figures/method_selection.pdf}
-\takeaway{Средняя потеря выбора: 0,34–0,36 п.п.; в худшем повторе — 1,04 п.п.}
-\source{Fit 1\,000. Потеря относительно test-oracle среди тех же fitted candidates; oracle недоступен при выборе.\newline Selector−confidence: +0,37 п.п. для BERT (интервал включает 0), +0,48 п.п. для MiniLM (не включает 0).}
+\medskip\small\renewcommand{\arraystretch}{1.15}
+\input{../paper/generated/imbalance_gain_example_table}
+\medskip
+\takeaway{В harm8 Ternary лучше Direct на 1,06 п.п.; изменение их разности не подтверждено.}
+\source{95\% одновременный интервал простого контраста: [0,02; 2,10] п.п. Иллюстрация выбрана после полной проверки.\newline Надёжная смена победителя требует сравнения двух режимов, а не одной строки.}
 \end{frame}
 
-\begin{frame}{Сначала проверить цель, затем выбирать сложность}
+\begin{frame}{Выбирать нужно с учётом устойчивости к данным}
 \centering
 \begin{tikzpicture}[node distance=.6cm]
-\node[box,text width=3.4cm] (a) {Проверить отбор\\известны ли вероятности?};
-\node[box,text width=3.4cm,right=of a] (b) {Сравнить кандидатов\\на естественном dev};
+\node[box,text width=3.4cm] (a) {Сравнить кандидатов\\на естественном dev};
+\node[box,text width=3.4cm,right=of a] (b) {Проверить устойчивость\\к составу train};
 \node[box,text width=3.4cm,right=of b] (c) {Проверить перенос\\на новой задаче};
 \draw[arr] (a)--(b);\draw[arr] (b)--(c);
 \end{tikzpicture}
 \bigskip
-\takeaway{Коррекция отбора восстанавливает качество;\newline выбор метода по малому dev остаётся неточным.}
+\takeaway{Состав данных меняет сравнение семейств;\newline переносимое правило выбора пока не получено.}
 \bigskip
 \small Один датасет и фиксированные эксперты ограничивают перенос вывода.
 \source{Статья, код, протокол и результаты:\newline\url{https://github.com/Nastik05/Cost-sensitive-routing}}
 \end{frame}
 
 \appendix
-\begin{frame}{Резерв: вся семья из 14 контрастов}
+\begin{frame}{Резерв: все попарные взаимодействия}
 \centering
-\includegraphics[height=6.1cm,width=.96\linewidth,keepaspectratio]{../paper/figures/correction_intervals.pdf}
-\source{Одновременные 95\% интервалы; corrected−raw, для selector — selector−confidence.}
+\includegraphics[height=6.1cm,width=.96\linewidth,keepaspectratio]{../paper/figures/imbalance_interaction_counts.pdf}
+\source{Число зависимых пар с различимым взаимодействием; общая поправка на всю семью 5691.}
 \end{frame}
 \end{document}

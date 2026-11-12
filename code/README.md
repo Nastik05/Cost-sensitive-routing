@@ -55,7 +55,35 @@ python3 -m venv .venv
 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m pytest -q -p no:cacheprovider code/test_experiment.py code/test_followup.py
 ```
 
-## Данные
+## Полный набор методов и дисбаланс
+
+Расширенный протокол: [PROTOCOL_IMBALANCE.md](PROTOCOL_IMBALANCE.md). Включены все восемь исходных обучаемых методов, confidence/random и все 21 прежняя пара экспертов. Изменяется только обучение роутеров: 7 составов, дополнительные IPW-контроли для 4 сильных обогащений, 3 объёма, 20 повторений, 3 квоты. Всего 110880 выбранных роутеров после обучения 443520 кандидатов регуляризации.
+
+```bash
+.venv/bin/python code/imbalance_study.py --workers 3
+.venv/bin/python code/audit_imbalance.py --workers 2
+.venv/bin/python code/imbalance_statistics.py --workers 3
+.venv/bin/python code/analyze_imbalance.py
+```
+
+По умолчанию результаты сохраняются в `code/results/imbalance_all/`. На обычном CPU запуск значительно больше двухметодного контроля; все условия имеют checkpoints и проверку хешей. Повторный запуск пропускает готовые условия. Изменённый вычислительный код/протокол требует нового `--output` у всех четырёх команд. Не перезаписывайте прежние результаты.
+
+Для предварительной проверки используются только dev-объекты:
+
+```bash
+.venv/bin/python code/imbalance_study.py --smoke --output code/results/imbalance_smoke --workers 3
+.venv/bin/python code/audit_imbalance.py --output code/results/imbalance_smoke --workers 2
+```
+
+Входной файл `data/imbalance_cache.npz` содержит прежние признаки и правильность всех семи экспертов; SHA, порядок 21 пары и происхождение данных находятся в `data/imbalance_manifest.json`. Исходный `banking77.npz` не меняется. Low-label направления не всегда соответствуют возрастанию стоимости; смотрите `cost_order_holds` в manifest.
+
+Статистика проверяет взаимодействие **метод × состав**, а также rescue precision/harm rate при близкой accuracy. Одна заранее заданная семья из 5691 контраста; все результаты публикуются, независимо от значимости. Bootstrap точно пересчитывает top-k, используя проверяемое сокращение префикса с полным fallback. Это оптимизация вычисления, не аппроксимация квоты.
+
+Тесты расширенного исследования: `python3 -m pytest -q -p no:cacheprovider code/test_imbalance.py`.
+
+[Полный отчёт и численные результаты](../paper/imbalance_results/REPORT.md), [все 5691 контраст](../paper/imbalance_results/contrasts.csv), [сводка взаимодействий](../paper/imbalance_results/interactions.csv). Статья и презентация обновлены по полному сравнению; двухметодный контроль сохраняется как предыдущий этап.
+
+## Источник данных
 
 В `data/banking77.npz` — компактный производный кэш:6080 строк, дешёвые признаки, парная правильность и разбиения. Исходные эксперты фиксированы и заново не обучаются; это повтор именно базового router-эксперимента, а не новый независимый test. Сеть/GPU/API-ключи не нужны. Ни correctness, ни label_id не являются входными признаками роутера.
 

@@ -1,0 +1,17 @@
+arm,method,improvement,degradation
+harm8_raw,direct,0,4
+harm8_raw,events,0,4
+harm8_raw,hurdle,0,4
+harm8_raw,joint,0,4
+harm8_raw,marginal,0,4
+harm8_raw,soft_gain,0,4
+harm8_raw,ternary,0,4
+harm8_raw,weak_error,0,0
+rescue8_raw,direct,0,0
+rescue8_raw,events,0,0
+rescue8_raw,hurdle,0,0
+rescue8_raw,joint,0,0
+rescue8_raw,marginal,0,0
+rescue8_raw,soft_gain,0,0
+rescue8_raw,ternary,0,0
+rescue8_raw,weak_error,0,0
