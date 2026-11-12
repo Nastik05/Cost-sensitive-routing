@@ -19,24 +19,24 @@ def digest(path):
 
 
 class Binary:
-    def __init__(self, X, y, strength, sample_weight=None):
+    def __init__(self, X, y, strength):
         self.constant = int(y[0]) if np.all(y == y[0]) else None
         self.model = None
         if self.constant is None:
-            self.model = LogisticRegression(C=1/(len(y)*strength), solver="lbfgs", max_iter=1000, tol=1e-7).fit(X, y, sample_weight=sample_weight)
+            self.model = LogisticRegression(C=1/(len(y)*strength), solver="lbfgs", max_iter=1000, tol=1e-7).fit(X, y)
 
     def predict(self, X):
         return np.full(len(X), self.constant, dtype=float) if self.model is None else self.model.predict_proba(X)[:, 1]
 
 
-def fit(method, X, W, S, strength, sample_weight=None):
+def fit(method, X, W, S, strength):
     D = S.astype(int) - W.astype(int)
     if method == "direct":
-        return [Ridge(alpha=len(X)*strength).fit(X, D, sample_weight=sample_weight)], 0.
+        return [Ridge(alpha=len(X)*strength).fit(X, D)], 0.
     if method == "weak_error":
-        return [Binary(X, 1-W, strength, sample_weight)], float(np.average(1-S, weights=sample_weight))
+        return [Binary(X, 1-W, strength)], float(np.mean(1-S))
     if method == "events":
-        return [Binary(X, (D == 1).astype(int), strength, sample_weight), Binary(X, (D == -1).astype(int), strength, sample_weight)], 0.
+        return [Binary(X, (D == 1).astype(int), strength), Binary(X, (D == -1).astype(int), strength)], 0.
     raise ValueError(method)
 
 

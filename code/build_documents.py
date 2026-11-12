@@ -20,8 +20,6 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--refresh-markdown",action="store_true",
                         help="Explicitly regenerate existing Markdown views from the TeX sources")
-    parser.add_argument("--section", action="append", default=[],
-                        help="Limit Markdown generation to these TeX stems (repeatable)")
     args = parser.parse_args()
     paper = ROOT / "paper"
     section_dir = paper / "paper_sections"
@@ -32,12 +30,9 @@ def main():
     for _ in range(2):
         step(article,paper)
         step(["lualatex",*flags,"main.tex"],ROOT/"slides")
-        step(["lualatex",*flags,"one_slide.tex"],ROOT/"slides")
     sections = [("abstract.tex","аннотация.md"),("introduction.tex","введение.md"),
                 ("related_works.tex","related_works.md"),
-                ("problem_statement.tex","постановка задачи.md"),("method.tex","method.md"),
-                ("experiments.tex","вычислительные эксперименты.md"),
-                ("router_comparison.tex","router_comparison.md"),("conclusion.tex","conclusion.md")]
+                ("problem_statement.tex","постановка задачи.md"),("experiments.tex","вычислительные эксперименты.md")]
     pandoc = pypandoc.get_pandoc_path()
 
     def markdown(tex,heading_shift=0):
@@ -46,7 +41,8 @@ def main():
                                     "--metadata=reference-section-title:Литература",
                                     "--shift-heading-level-by="+str(heading_shift),"--wrap=none"],
                                    cwd=paper,input=tex,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=True)
-        text = re.sub(r"(?<!/)figures/([^\s)]+)\.pdf", r"../figures/\1.png", converted.stdout)
+        text = converted.stdout.replace("figures/error_curve.pdf","../figures/error_curve.png").replace(
+            "figures/decision_profiles.pdf","../figures/decision_profiles.png")
         text = re.sub(r"\$`([^`]+)`\$",lambda m:"$"+m.group(1)+"$",text)
 
         def display_math(match):
@@ -58,21 +54,10 @@ def main():
 
         text = re.sub(r"```\s*math\s*\n(.*?)\n```",display_math,text,flags=re.S)
         text = re.sub(r"\[([^\]]+)\]\(#(?:tab|fig|eq):[^)]+\)",r"\1",text)
-        for source in ["[sec:method](#sec:method)", r"[\[sec:method\]](#sec:method)"]:
-            text = text.replace(source, "[«Метод и теоретические основания»](method.md)")
-        text = text.replace(r"[\[eq:selection_shift\]](#eq:selection_shift)",
-                            "[изменения цели при отборе](method.md#почему-отбор-исходов-меняет-обучающую-цель)")
-        text = text.replace(r"[\[tab:all_methods\]](#tab:all_methods)",
-                            "[полного набора методов](method.md#модели-и-критерии-обучения)")
-        # Pandoc preserves physical newlines inside some inline TeX expressions.
-        text = re.sub(r"(?<!\$)\$(?!\$)([^$]+)\$(?!\$)",
-                      lambda m: "$"+re.sub(r"\s*\n\s*", " ", m.group(1))+"$", text)
         text = re.sub(r"\n{3,}","\n\n",text)
         return text
 
     for source,target in sections:
-        if args.section and Path(source).stem not in args.section:
-            continue
         target_path = section_dir / target
         # Existing Markdown may contain the author's manual edits.
         if target_path.exists() and not args.refresh_markdown:
@@ -80,12 +65,7 @@ def main():
         tex = (section_dir / source).read_text()
         if source == "abstract.tex":
             tex = "\\section*{Аннотация}\n" + tex
-        text = markdown(tex)
-        if source == "router_comparison.tex":
-            # GFM has no column spanning; use the same data with flat headers.
-            flat = (paper / "generated/imbalance_accuracy_table.md").read_text().strip()
-            text = re.sub(r"(?m)^\|  \|.*?(?=\n\n)", lambda m: flat, text, count=1, flags=re.S)
-        target_path.write_text(text)
+        target_path.write_text(markdown(tex))
     print("Built paper/main.pdf and section views in paper/paper_sections/")
 
 
