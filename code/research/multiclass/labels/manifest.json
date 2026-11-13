@@ -1,0 +1,217 @@
+{
+  "banking77": {
+    "classes": 77,
+    "test_n": 3080,
+    "clean_n": 3072,
+    "support_min": 40,
+    "support_max": 40,
+    "balanced": true,
+    "pairs": [
+      {
+        "pair_id": 0,
+        "weak": "tfidf_lr",
+        "strong": "bert_tiny_tuned",
+        "panel": "original",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 1,
+        "weak": "tfidf_lr",
+        "strong": "minilm_frozen_lr",
+        "panel": "original",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 2,
+        "weak": "tfidf_lr",
+        "strong": "minilm_tuned",
+        "panel": "original",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 3,
+        "weak": "bert_tiny_tuned",
+        "strong": "minilm_frozen_lr",
+        "panel": "original",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 4,
+        "weak": "bert_tiny_tuned",
+        "strong": "minilm_tuned",
+        "panel": "original",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 5,
+        "weak": "minilm_frozen_lr",
+        "strong": "minilm_tuned",
+        "panel": "original",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 6,
+        "weak": "tfidf_1_per_intent",
+        "strong": "tfidf_lr",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 7,
+        "weak": "tfidf_1_per_intent",
+        "strong": "minilm_frozen_lr",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 8,
+        "weak": "tfidf_1_per_intent",
+        "strong": "bert_tiny_tuned",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 9,
+        "weak": "tfidf_1_per_intent",
+        "strong": "minilm_tuned",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 10,
+        "weak": "tfidf_3_per_intent",
+        "strong": "tfidf_lr",
+        "panel": "low_label",
+        "cost_order_holds": false
+      },
+      {
+        "pair_id": 11,
+        "weak": "tfidf_3_per_intent",
+        "strong": "minilm_frozen_lr",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 12,
+        "weak": "tfidf_3_per_intent",
+        "strong": "bert_tiny_tuned",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 13,
+        "weak": "tfidf_3_per_intent",
+        "strong": "minilm_tuned",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 14,
+        "weak": "tfidf_10_per_intent",
+        "strong": "tfidf_lr",
+        "panel": "low_label",
+        "cost_order_holds": false
+      },
+      {
+        "pair_id": 15,
+        "weak": "tfidf_10_per_intent",
+        "strong": "minilm_frozen_lr",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 16,
+        "weak": "tfidf_10_per_intent",
+        "strong": "bert_tiny_tuned",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 17,
+        "weak": "tfidf_10_per_intent",
+        "strong": "minilm_tuned",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 18,
+        "weak": "tfidf_1_per_intent",
+        "strong": "tfidf_3_per_intent",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 19,
+        "weak": "tfidf_1_per_intent",
+        "strong": "tfidf_10_per_intent",
+        "panel": "low_label",
+        "cost_order_holds": true
+      },
+      {
+        "pair_id": 20,
+        "weak": "tfidf_3_per_intent",
+        "strong": "tfidf_10_per_intent",
+        "panel": "low_label",
+        "cost_order_holds": true
+      }
+    ],
+    "source_sha256": {
+      "/home/kuril/opencode/routing/banking77_experiment/artifacts/experts/tfidf_lr/predictions.npz": "e23f98c3d09749cdb35240ac925b33153c92a9a98e14ce18cb2cf2018f149174",
+      "/home/kuril/opencode/routing/banking77_experiment/artifacts/experts/minilm_frozen_lr/predictions.npz": "dd8d843af30aee0c404a1ccd3f393e00720b0392b2145f8f6b60c77ecc9a4d3c",
+      "/home/kuril/opencode/routing/banking77_experiment/artifacts/experts/bert_tiny_tuned/predictions.npz": "e8db83076c555a344e15af5767abb6a52d0922afbe07a4a6c79f0fc335d319c5",
+      "/home/kuril/opencode/routing/banking77_experiment/artifacts/experts/minilm_tuned/predictions.npz": "3d76c4a47bf3cc71fc15b79e8e5c96a94f15adf9431c72e7f5d1aa3673b15450",
+      "/home/kuril/opencode/routing/banking77_experiment/artifacts/weak_experts/tfidf_1_per_intent/predictions.npz": "404710610e7c3ea099e8a65a4032e79d4a7c16a0953b33f01628259fce08882a",
+      "/home/kuril/opencode/routing/banking77_experiment/artifacts/weak_experts/tfidf_3_per_intent/predictions.npz": "b63a8dddd9a5d52f07a9d1ae154ba0c266716add6facc28f0cb03403a3f10aa0",
+      "/home/kuril/opencode/routing/banking77_experiment/artifacts/weak_experts/tfidf_10_per_intent/predictions.npz": "64daf7192e527b7ba4a20b5414f370d04465b5baa65a9d8eb7546fc72436599c",
+      "/home/kuril/opencode/routing/banking77_experiment/data/prepared.csv": "8f3e5e6d21a11a33030be9e5371c4f5d8437dbf22873f68c9e2c623e89c4d11b",
+      "/home/kuril/opencode/routing/submission_hw6/code/data/imbalance_cache.npz": "36e2e42b1d12da79b24613be54d285d981c22a59137836ccb3ab6518f4918377"
+    },
+    "labels_sha256": "4b348c6280977ad62d3a277a3d03bc343d2d8add3c22e544766c3e398f736161"
+  },
+  "clinc150": {
+    "classes": 150,
+    "test_n": 4500,
+    "clean_n": 4497,
+    "support_min": 30,
+    "support_max": 30,
+    "balanced": true,
+    "pairs": [
+      {
+        "pair_id": 0,
+        "weak": "tfidf3",
+        "strong": "tfidf10"
+      },
+      {
+        "pair_id": 1,
+        "weak": "tfidf3",
+        "strong": "tfidf_full"
+      },
+      {
+        "pair_id": 2,
+        "weak": "tfidf3",
+        "strong": "minilm"
+      },
+      {
+        "pair_id": 3,
+        "weak": "tfidf10",
+        "strong": "tfidf_full"
+      },
+      {
+        "pair_id": 4,
+        "weak": "tfidf10",
+        "strong": "minilm"
+      },
+      {
+        "pair_id": 5,
+        "weak": "tfidf_full",
+        "strong": "minilm"
+      }
+    ],
+    "source_sha256": {
+      "/home/kuril/opencode/routing/research_clinc_20261112/artifacts/probabilities.npz": "dae50505e45b6d125db1b43710b12ebfdf2aaab5f65634769c05646efb50f39a",
+      "/home/kuril/opencode/routing/research_clinc_20261112/data/prepared.csv": "3a98b7c87dd0ca938216719a469c84a25dc0405a401efba48be1f2514f904193",
+      "/home/kuril/opencode/routing/research_clinc_20261112/artifacts/router_cache.npz": "98e8387819451a00326022a40e01da920738bfaa47d42555b66093d05b94bee6"
+    },
+    "labels_sha256": "0de9900638bf3dc92d545355a3363fb454514e621b62336ccb1ba7c54ea59e39"
+  }
+}

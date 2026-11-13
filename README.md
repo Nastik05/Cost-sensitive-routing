@@ -14,9 +14,13 @@
 - [Введение](paper/paper_sections/введение.md)
 - [Обзор литературы — Related works](paper/paper_sections/related_works.md)
 - [Постановка задачи](paper/paper_sections/постановка%20задачи.md)
+- [Метод и теоретические основания](paper/paper_sections/method.md)
 - [Вычислительные эксперименты](paper/paper_sections/вычислительные%20эксперименты.md)
+- [Заключение](paper/paper_sections/conclusion.md)
 - **[Статья — PDF](paper/main.pdf)**
 - [Исходник LaTeX](paper/main.tex)
+
+Исходные аннотация, введение, обзор, постановка задачи и базовый эксперимент сохранены. После них добавлены расширенные эксперименты BANKING77, CLINC150 и многоклассовые метрики. [Прежняя статья — PDF](paper/archive/main_20261023.pdf).
 
 ## Литература и иллюстрации
 
@@ -24,7 +28,10 @@
 - [Библиография BibTeX](paper/references.bib)
 - [Профили решений](paper/figures/decision_profiles.pdf)
 - [Кривая ошибки](paper/figures/error_curve.pdf)
-- [Презентация основной идеи](slides/main.pdf)
+- [Влияние состава обучения на двух датасетах](paper/additions/figures/composition_effects.pdf)
+- [Профили F1 отдельных классов](paper/additions/figures/class_profile.pdf)
+- **[Текущая презентация — 5 слайдов](slides/main.pdf)**
+- [Прежний однослайдовый вариант](slides/one_slide.pdf)
 
 ## Воспроизведение
 
@@ -38,6 +45,19 @@ python3 -m venv .venv
 
 В базовом сравнении представлены две пары классификаторов BANKING77. Профили решений являются описательными результатами; переносимость рекомендаций и статистические различия их компонентов проверяются отдельно.
 
+### Расширенные эксперименты
+
+[Код, кэши, протоколы и команды](code/research/README.md) включают восемь методов обучения, полные статистические таблицы BANKING77/CLINC150 и расчёт многоклассовых метрик. Основные численные эффекты статьи можно проверить без повторного обучения:
+
+```bash
+.venv/bin/python code/research/verify_results.py
+.venv/bin/python code/build_documents.py
+```
+
+Сборка сохраняет старые текстовые разделы; новые Markdown-разделы и дополнение к экспериментам формируются из текущих TeX-исходников. Однослайдовый архив остаётся неизменным.
+
 ## Лицензия
 
 Код: [MIT](LICENSE). Данные BANKING77 и производный кэш: [CC BY 4.0](code/data/BANKING77_LICENSE), источник — [PolyAI](https://github.com/PolyAI-LDN/task-specific-datasets), [Casanueva et al., 2020](https://aclanthology.org/2020.nlp4convai-1.5/).
+
+Производные кэши CLINC150: [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/), источник — [clinc/oos-eval](https://github.com/clinc/oos-eval), [Larson et al., 2019](https://aclanthology.org/D19-1131/). Происхождение и преобразования данных описаны в [экспериментальном коде](code/research/README.md#данные-и-атрибуция).

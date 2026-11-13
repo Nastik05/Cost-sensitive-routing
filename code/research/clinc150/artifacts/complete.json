@@ -1,0 +1,59 @@
+{
+  "cache_sha256": "98e8387819451a00326022a40e01da920738bfaa47d42555b66093d05b94bee6",
+  "prepared_sha256": "3a98b7c87dd0ca938216719a469c84a25dc0405a401efba48be1f2514f904193",
+  "pairs": [
+    {
+      "pair_id": 0,
+      "weak": "tfidf3",
+      "strong": "tfidf10"
+    },
+    {
+      "pair_id": 1,
+      "weak": "tfidf3",
+      "strong": "tfidf_full"
+    },
+    {
+      "pair_id": 2,
+      "weak": "tfidf3",
+      "strong": "minilm"
+    },
+    {
+      "pair_id": 3,
+      "weak": "tfidf10",
+      "strong": "tfidf_full"
+    },
+    {
+      "pair_id": 4,
+      "weak": "tfidf10",
+      "strong": "minilm"
+    },
+    {
+      "pair_id": 5,
+      "weak": "tfidf_full",
+      "strong": "minilm"
+    }
+  ],
+  "expert_reload": [
+    {
+      "expert": "tfidf3",
+      "checks": 50,
+      "max_error": 1.4248570434638452e-08
+    },
+    {
+      "expert": "tfidf10",
+      "checks": 50,
+      "max_error": 2.9524027445049228e-08
+    },
+    {
+      "expert": "tfidf_full",
+      "checks": 50,
+      "max_error": 2.9800057754769682e-08
+    },
+    {
+      "expert": "minilm",
+      "checks": 50,
+      "max_error": 2.9663870693141803e-08
+    }
+  ],
+  "preexisting_files_preserved": 203
+}

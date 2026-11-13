@@ -22,9 +22,11 @@ python3 -m venv .venv
 .venv/bin/python code/build_documents.py
 ```
 
-Нужны LuaLaTeX, BibTeX, fontspec/polyglossia/beamer и шрифты Liberation Serif, DejaVu Sans. Pandoc включён в зависимость `pypandoc_binary`. Готовые PDF уже включены. Сборка создаёт `paper/main.pdf`, недостающие Markdown-версии разделов в `paper/paper_sections/` и `slides/main.pdf`.
+Нужны LuaLaTeX, BibTeX, fontspec/polyglossia/beamer и шрифты Liberation Serif, DejaVu Sans. Pandoc включён в зависимость `pypandoc_binary`. Готовые PDF уже включены. Сборка создаёт текущие `paper/main.pdf` и `slides/main.pdf`, добавленные Markdown-разделы метода и заключения и дополнение к экспериментам. Прежняя однослайдовая презентация сохранена как `slides/one_slide.pdf` и не пересобирается автоматически.
 
-Исходники разделов находятся в `paper/paper_sections/`: `abstract.tex`, `introduction.tex`, `related_works.tex`, `problem_statement.tex` и `experiments.tex`. `paper/main.tex` подключает их, причём обзор литературы идёт сразу после введения. Markdown-файлы предназначены для чтения на GitHub. Обычная сборка сохраняет существующие Markdown-файлы, чтобы не затереть ручные правки автора. Для явного обновления всех Markdown-версий из TeX используется `python3 code/build_documents.py --refresh-markdown`; перед этим правки нужно синхронизировать с TeX.
+Исходники прежних разделов находятся в `paper/paper_sections/`: `abstract.tex`, `introduction.tex`, `related_works.tex`, `problem_statement.tex` и `experiments.tex`. Они сохранены дословно; обзор идёт сразу после введения. Новые разделы находятся в `paper/additions/`. Markdown предназначен для чтения на GitHub. Сборка не переписывает прежние аннотацию, введение, обзор и постановку; старый текст экспериментов остаётся неизменным префиксом перед новым блоком. `--refresh-markdown` обновляет только добавленные представления. Исторический сборщик сохранён в `code/archive/` для справки.
+
+Для отдельной сборки используйте `python3 code/build_documents.py --target article` или `--target slides`.
 
 ## Данные
 
@@ -33,3 +35,7 @@ python3 -m venv .venv
 Источник: [PolyAI BANKING77](https://github.com/PolyAI-LDN/task-specific-datasets), revision `57ec275d8078af65b7731c2a98be812d844a6d6b`. Атрибуция: Casanueva et al., *Efficient Intent Detection with Dual Sentence Encoders*, NLP4ConvAI2020, [DOI](https://doi.org/10.18653/v1/2020.nlp4convai-1.5). Данные/кэш: **CC BY4.0**, см. `data/BANKING77_LICENSE`; код — MIT. Параметры экспертов и SHA исходного результата — `data/manifest.json`.
 
 Это воспроизводимая базовая конфигурация исследования. Таблицы профилей описательные; статистическая значимость их компонентов не заявляется. Подробное описание данных, настройки и результатов находится в [разделе экспериментов](../paper/paper_sections/вычислительные%20эксперименты.md).
+
+## Расширенное исследование
+
+[code/research](research/README.md) содержит полный набор восьми методов, панели из 21 BANKING77 и 6 CLINC150 пар, обучение при известном отборе, оба критерия настройки CLINC, статистические процедуры, многоклассовые метрики и проверенные таблицы результатов. Кэши фиксированных экспертов включены; новые полные модели и scores создаются повторным запуском и игнорируются Git.

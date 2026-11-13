@@ -1,0 +1,89 @@
+{
+  "source_sha256": {
+    "contrasts.csv": "cc62d665e6451508ba192c7b2b3bae8935cdc2770f008e21f01491dbae2e9c62",
+    "example_accuracy.csv": "9acd91c62db0c414a40ea97eceaa6dba25b905f87b3e9a4ca83a4a7736e67760"
+  },
+  "script_sha256": "7b895843b8d9f9a18ea038e9d96e24dc0fe0f48ca729898f80d27e5e23c50d84",
+  "significant_vs_weak_error": 28,
+  "significant_vs_confidence": 28,
+  "pairs": [
+    1,
+    2,
+    3,
+    20
+  ],
+  "example": [
+    {
+      "method": "Weak-error",
+      "natural_pct": 91.2646103896104,
+      "harm8_pct": 91.25162337662336,
+      "relative_change_pp": 0.0,
+      "low_pp": null,
+      "high_pp": null,
+      "adjusted_p": null
+    },
+    {
+      "method": "Direct",
+      "natural_pct": 91.43668831168831,
+      "harm8_pct": 86.5551948051948,
+      "relative_change_pp": -4.868506493506493,
+      "low_pp": -7.340872085149417,
+      "high_pp": -2.396140901863568,
+      "adjusted_p": 0.0014992503748125
+    },
+    {
+      "method": "Marginal",
+      "natural_pct": 91.35714285714286,
+      "harm8_pct": 86.50162337662337,
+      "relative_change_pp": -4.842532467532467,
+      "low_pp": -7.323220580711187,
+      "high_pp": -2.361844354353748,
+      "adjusted_p": 0.0014992503748125
+    },
+    {
+      "method": "Events",
+      "natural_pct": 91.45292207792208,
+      "harm8_pct": 86.50324675324676,
+      "relative_change_pp": -4.936688311688312,
+      "low_pp": -7.441645119389805,
+      "high_pp": -2.4317315039868186,
+      "adjusted_p": 0.0014992503748125
+    },
+    {
+      "method": "Ternary",
+      "natural_pct": 91.46103896103897,
+      "harm8_pct": 86.61201298701299,
+      "relative_change_pp": -4.836038961038961,
+      "low_pp": -7.344344212614807,
+      "high_pp": -2.3277337094631148,
+      "adjusted_p": 0.0014992503748125
+    },
+    {
+      "method": "Joint",
+      "natural_pct": 91.42857142857144,
+      "harm8_pct": 86.61201298701299,
+      "relative_change_pp": -4.803571428571429,
+      "low_pp": -7.296687911642753,
+      "high_pp": -2.3104549455001053,
+      "adjusted_p": 0.0014992503748125
+    },
+    {
+      "method": "Hurdle",
+      "natural_pct": 91.33766233766234,
+      "harm8_pct": 86.6103896103896,
+      "relative_change_pp": -4.7142857142857135,
+      "low_pp": -7.178072888447954,
+      "high_pp": -2.250498540123474,
+      "adjusted_p": 0.0014992503748125
+    },
+    {
+      "method": "Soft-gain",
+      "natural_pct": 91.37175324675324,
+      "harm8_pct": 86.51623376623377,
+      "relative_change_pp": -4.842532467532467,
+      "low_pp": -7.289850716999991,
+      "high_pp": -2.395214218064943,
+      "adjusted_p": 0.0014992503748125
+    }
+  ]
+}

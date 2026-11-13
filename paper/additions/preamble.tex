@@ -1,0 +1,8 @@
+% New preamble commands only; the original bibliography file stays intact.
+\input{additions/generated/numbers}
+\let\TemplateBibliography\bibliography
+\renewcommand{\bibliography}[1]{\TemplateBibliography{#1,additions/references}}
+
+\makeatletter
+\renewcommand{\@noticestring}{Preprint}
+\makeatother

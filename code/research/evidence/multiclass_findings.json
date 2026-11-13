@@ -1,0 +1,40 @@
+{
+  "metric_significance": {
+    "accuracy": 1,
+    "macro_f1": 1,
+    "macro_precision": 0
+  },
+  "family": 3564,
+  "macro_only_cases": 0,
+  "near_accuracy_threshold_pp": 0.05,
+  "near_accuracy_cases": 348,
+  "largest_near_accuracy_macro_f1_gap_pp": 0.1676218615765057,
+  "class_example": {
+    "dataset": "banking77",
+    "pair_id": 9,
+    "weak": "tfidf_1_per_intent",
+    "strong": "minilm_tuned",
+    "criterion": "mse",
+    "method": "weak_error",
+    "reference": "direct",
+    "overall": [
+      {
+        "method": "Weak-error",
+        "accuracy_pct": 42.74188311688311,
+        "macro_precision_pct": 46.90805973853936,
+        "macro_recall_pct": 42.74188311688311,
+        "macro_f1_pct": 42.65958567927724
+      },
+      {
+        "method": "Direct",
+        "accuracy_pct": 42.76623376623376,
+        "macro_precision_pct": 47.4458611611961,
+        "macro_recall_pct": 42.76623376623376,
+        "macro_f1_pct": 42.82720754085375
+      }
+    ],
+    "selection": "largest descriptive macro-F1 gap among natural comparisons with |mean accuracy gap| <= 0.05pp; not an equivalence test"
+  },
+  "rows_computed": 842760,
+  "sklearn_checks": 42079
+}

@@ -1,0 +1,329 @@
+{
+  "description": "Sources copied from the completed local experiments; repository-specific adapters are documented separately.",
+  "files": {
+    "paper/archive/main_20261023.pdf": {
+      "source": "restored_main/paper/main.pdf",
+      "sha256": "7a6e81c22161a5c70bd7ab5f8de9d30c386515e6239e2960f1ad3e4f572801d5"
+    },
+    "paper/main.tex": {
+      "source": "main/main.tex",
+      "sha256": "6b684fbeebd7b6ec41be6acb7734a347ef8e491ca4bc5cf283b00b41ac9dc571"
+    },
+    "paper/main.pdf": {
+      "source": "main/main.pdf",
+      "sha256": "2dac0dcbec28bca0cec2302a1330f95bc4929437b788813d5e774c59ce1105f8"
+    },
+    "paper/additions/protocol.tex": {
+      "source": "main/additions/protocol.tex",
+      "sha256": "a16beaff2ee96887d72e50ad7cb2e0a31e60f8acb9401b1067dc61aeb28a1567"
+    },
+    "paper/additions/preamble.tex": {
+      "source": "main/additions/preamble.tex",
+      "sha256": "acb67e5ca5614ef2fc13596f52d8bd58ff75decf7da56f1866e838b695a170ac"
+    },
+    "paper/additions/method.tex": {
+      "source": "main/additions/method.tex",
+      "sha256": "942d316f23c28aa57180f63b74221cca0d2cb8fe5b21cc59bc949d806f9d598f"
+    },
+    "paper/additions/results.tex": {
+      "source": "main/additions/results.tex",
+      "sha256": "2e96edfc5f6683fa5c3626afafe64155940eed452d2230594121a49bfe4909ba"
+    },
+    "paper/additions/references.bib": {
+      "source": "main/additions/references.bib",
+      "sha256": "5c63c6fbfe78c614e23f2a6f031344dd8bacfae5360742a4a461ea7b78dfa065"
+    },
+    "paper/additions/content.tex": {
+      "source": "main/additions/content.tex",
+      "sha256": "15fed964f7242725baabaee0e6d13df78d93094721364d0b2802ccb27dd3371f"
+    },
+    "paper/additions/theory_addition.tex": {
+      "source": "main/additions/theory_addition.tex",
+      "sha256": "8691fda3c3538f8fa66a67477a2152b972ca8562742ef40240a58c5fb878e324"
+    },
+    "paper/additions/discussion.tex": {
+      "source": "main/additions/discussion.tex",
+      "sha256": "e793e80d292478da17c555ac570bab4bdf8446003e71b435bb4490d73526cd75"
+    },
+    "paper/additions/multiclass.tex": {
+      "source": "main/additions/multiclass.tex",
+      "sha256": "da15714225eb14bc55184cbfab5114acf1affc5ab106319efbdceeffacfc4636"
+    },
+    "paper/additions/appendices.tex": {
+      "source": "main/additions/appendices.tex",
+      "sha256": "7a522d5cb8206848df6bc8765f99683e39ad7849d3a10839bfb9f8c80368cf2b"
+    },
+    "paper/additions/conclusion.tex": {
+      "source": "main/additions/conclusion.tex",
+      "sha256": "8bdc7d598d378552feaeb92d8153f6c74b26a70d1807ddbd086e7840187a8b22"
+    },
+    "paper/additions/figures/class_profile.png": {
+      "source": "main/additions/figures/class_profile.png",
+      "sha256": "eacd85d60fc9bce3506e10a23a150251f104b1eadb138a096df0151e821c1bc3"
+    },
+    "paper/additions/figures/composition_effects.pdf": {
+      "source": "main/additions/figures/composition_effects.pdf",
+      "sha256": "65d208f125ae56a4aa8d2f21d62d3b05cd91a95c6797da250920327ffc34aca6"
+    },
+    "paper/additions/figures/class_profile.pdf": {
+      "source": "main/additions/figures/class_profile.pdf",
+      "sha256": "3a778b18d0c382b410827377748ffbcdd1837d594ec8c66e84cef4847b4f9a2f"
+    },
+    "paper/additions/figures/composition_effects.png": {
+      "source": "main/additions/figures/composition_effects.png",
+      "sha256": "1d6d878d5e47f0e46f13587c6cb08f01b656f773864de0fbd1aef8447a88cdd9"
+    },
+    "paper/additions/generated/clinc_primary_family_counts.csv": {
+      "source": "main/additions/generated/clinc_primary_family_counts.csv",
+      "sha256": "41814df5847cc92c4e465f52df6fc334b89948cbfb5d3e62111f5e3ddbb45941"
+    },
+    "paper/additions/generated/all_eight_interactions.csv": {
+      "source": "main/additions/generated/all_eight_interactions.csv",
+      "sha256": "9779ffe694e81fe8c4dfac864d00285049d21c792e425b05acdd0fc131fe564c"
+    },
+    "paper/additions/generated/bank_family_counts.csv": {
+      "source": "main/additions/generated/bank_family_counts.csv",
+      "sha256": "a57188ee6b0a9a5db1acbaa1f90630989900ab5878adfa743a00188a32f790f7"
+    },
+    "paper/additions/generated/clinc_means.tex": {
+      "source": "main/additions/generated/clinc_means.tex",
+      "sha256": "9f5e8b47b325071882fe2c165bf95980d66cadc92d79a3783aa0d308740f45b3"
+    },
+    "paper/additions/generated/clinc_mc_family_counts.csv": {
+      "source": "main/additions/generated/clinc_mc_family_counts.csv",
+      "sha256": "4b1c0abbad7dc8ba5a2eb916e83c02f5f69ed970b5bce73a818ecbe120b4577c"
+    },
+    "paper/additions/generated/mc_intervals.tex": {
+      "source": "main/additions/generated/mc_intervals.tex",
+      "sha256": "a737b74ed1d981f3db98fa4836d859d33e64654da6cc7aa316134648eee29771"
+    },
+    "paper/additions/generated/claims.csv": {
+      "source": "main/additions/generated/claims.csv",
+      "sha256": "63cd5a12f573aa95731b6715b71f9d154a119210af3f012d727280a95875bc0e"
+    },
+    "paper/additions/generated/multiclass_family_counts.csv": {
+      "source": "main/additions/generated/multiclass_family_counts.csv",
+      "sha256": "f79f0ad78e62f1b93abc62fb8d4659d41d464860db9dac58979fa7c03a7792a0"
+    },
+    "paper/additions/generated/bank_means.tex": {
+      "source": "main/additions/generated/bank_means.tex",
+      "sha256": "af942e37e2fc5ca17593281cf6ae096ff2f724c8764de712b6712808218cb2bd"
+    },
+    "paper/additions/generated/numbers.tex": {
+      "source": "main/additions/generated/numbers.tex",
+      "sha256": "0abd8e348814beefb9e36971a2d13c668f5cd786c966cb48d56f515a5ce1c0b1"
+    },
+    "paper/additions/generated/effects.tex": {
+      "source": "main/additions/generated/effects.tex",
+      "sha256": "7ff49d8066f90f6445a68d3f0aa719f0291312f2a528402adc44196ae9a430de"
+    },
+    "paper/additions/generated/all_eight_interactions.tex": {
+      "source": "main/additions/generated/all_eight_interactions.tex",
+      "sha256": "eb0d0a53cbe86edb64da3960116e7a45afe02f2f3db08cfa0faeab7d9bbc9e48"
+    },
+    "paper/additions/generated/natural_metrics.tex": {
+      "source": "main/additions/generated/natural_metrics.tex",
+      "sha256": "dc6e6659988aa6fff748f5a2fc755d33f05267de3679ce8305453aed5fff0f4e"
+    },
+    "slides/main.pdf": {
+      "source": "main/slides.pdf",
+      "sha256": "98a6067076844f6e385fcb214d8efa259f41e072beb82b741665631241868ab5"
+    },
+    "slides/main.tex": {
+      "source": "main/presentation/slides.tex",
+      "sha256": "b0cde9f7aa399de5723674b2f2ed53f4d348fcf8336aa2ef9b4e6a6a8a11547b"
+    },
+    "slides/assets/key_result.json": {
+      "source": "main/presentation/assets/key_result.json",
+      "sha256": "a56dc83e40f79e2e4bbd86482df727be012428495780200e443a0cd42eb11339"
+    },
+    "slides/assets/imbalance_natural_profiles.pdf": {
+      "source": "main/presentation/assets/imbalance_natural_profiles.pdf",
+      "sha256": "c187eb68ad68ec3326e6b805df5bd6ad7b0155dddf326e43bb8ea9216f1d64f6"
+    },
+    "slides/assets/key_result_table.tex": {
+      "source": "main/presentation/assets/key_result_table.tex",
+      "sha256": "b7083d878d8112ccddb28423cbee15b0c48198e7410208616b731a5d1a7d7ab5"
+    },
+    "code/research/imbalance_estimators.py": {
+      "source": "submission_hw6/code/imbalance_estimators.py",
+      "sha256": "c1f91211a1277f04905d76d92c6661dbceaf91065b1be21f2b5df1afbe3d2b62"
+    },
+    "code/research/imbalance_study.py": {
+      "source": "submission_hw6/code/imbalance_study.py",
+      "sha256": "453a512522db21150923a267c4aedc3b2c2293c888060a59b0a0d12f4eda1a2a"
+    },
+    "code/research/imbalance_statistics.py": {
+      "source": "submission_hw6/code/imbalance_statistics.py",
+      "sha256": "1a777947ea73ec1355787db3c29be496b570664b67ec1d42c7d1dbbbbeffb1a4"
+    },
+    "code/research/audit_imbalance.py": {
+      "source": "submission_hw6/code/audit_imbalance.py",
+      "sha256": "3440d16ea8dde31beb622760f60baace5fddaf3d79c6fb3c2e347dec4db81fcf"
+    },
+    "code/research/followup_stats.py": {
+      "source": "submission_hw6/code/followup_stats.py",
+      "sha256": "aa478f17e2bf82cb5f633fc76b76518bc74b595326ac2090d2bd6e40af0d1874"
+    },
+    "code/research/test_imbalance.py": {
+      "source": "submission_hw6/code/test_imbalance.py",
+      "sha256": "8a9bde8a355b6f1efc181d30d9e6a5a00fe6764e38639e933547a7e07b3fdc48"
+    },
+    "code/research/PROTOCOL_IMBALANCE.md": {
+      "source": "submission_hw6/code/PROTOCOL_IMBALANCE.md",
+      "sha256": "1f7e6fbe9f11342865ea103ba1ae01c28ebc1170512d5b75d3353e122d147858"
+    },
+    "code/research/data/imbalance_cache.npz": {
+      "source": "submission_hw6/code/data/imbalance_cache.npz",
+      "sha256": "36e2e42b1d12da79b24613be54d285d981c22a59137836ccb3ab6518f4918377"
+    },
+    "code/research/data/imbalance_manifest.json": {
+      "source": "submission_hw6/code/data/imbalance_manifest.json",
+      "sha256": "3266de892ffc8d174b75489d4068503588509215d15c9f13b3abaa0d9e56d6ee"
+    },
+    "code/research/clinc150/run_routers.py": {
+      "source": "research_clinc_20261112/run_routers.py",
+      "sha256": "fed637c713b1d26061cef7906d570ddaadf9540430aaa59bacdf229d4142c91d"
+    },
+    "code/research/clinc150/audit.py": {
+      "source": "research_clinc_20261112/audit.py",
+      "sha256": "b3a8fc5881649841ea4aa772c66bde8d08fcde8221be5b426c95c30e12ea0e6b"
+    },
+    "code/research/clinc150/infer.py": {
+      "source": "research_clinc_20261112/infer.py",
+      "sha256": "a5f69dfc2f56980ebf1fff270fc0ad996a97628cbf0ed94591915e3e70ad1809"
+    },
+    "code/research/clinc150/check_mc.py": {
+      "source": "research_clinc_20261112/check_mc.py",
+      "sha256": "01708d7cc5f2305fba1e2a3427325165aad38db85ce97a43e2d907a2b5ed4326"
+    },
+    "code/research/clinc150/test_stage.py": {
+      "source": "research_clinc_20261112/test_stage.py",
+      "sha256": "171fd8684dbd478f11a06d4307a3eb1236b14a3995f7b77be2798b9b9b76008c"
+    },
+    "code/research/clinc150/PROTOCOL.md": {
+      "source": "research_clinc_20261112/PROTOCOL.md",
+      "sha256": "2e72f98139788733981ee8d0fcf17e11c9556177f20b2306238a3d4cf7df9f9b"
+    },
+    "code/research/clinc150/MC_STABILITY.md": {
+      "source": "research_clinc_20261112/MC_STABILITY.md",
+      "sha256": "03a94787f4f8ae00f4d8ac775cceb88362118f82b361bd5d4902375a9b416e83"
+    },
+    "code/research/clinc150/artifacts/router_cache.npz": {
+      "source": "research_clinc_20261112/artifacts/router_cache.npz",
+      "sha256": "98e8387819451a00326022a40e01da920738bfaa47d42555b66093d05b94bee6"
+    },
+    "code/research/clinc150/artifacts/complete.json": {
+      "source": "research_clinc_20261112/artifacts/complete.json",
+      "sha256": "6fec2d8c0adb3a62a407db54e4192d5af3c2bbb1664791be6d354b6d9e243de6"
+    },
+    "code/research/clinc150/artifacts/experts.json": {
+      "source": "research_clinc_20261112/artifacts/experts.json",
+      "sha256": "03a1acdfdbdf5da4031a465524df020852881c89ad1c2799ef5804fa59501bc9"
+    },
+    "code/research/clinc150/artifacts/data_manifest.json": {
+      "source": "research_clinc_20261112/data/manifest.json",
+      "sha256": "29394cfe8a0ddf2ac1e6e80ebfec2454dfcbf37529a13859329f8a682d3d719d"
+    },
+    "code/research/multiclass/compute.py": {
+      "source": "multiclass_metrics_v1/compute.py",
+      "sha256": "36a26893862bc6cb940ef41326f6b3f68fba55465317e106417671385166f0e9"
+    },
+    "code/research/multiclass/summarize.py": {
+      "source": "multiclass_metrics_v1/summarize.py",
+      "sha256": "dbcaa602899949f51e5875685ab77e77cf09f8ac2991cf258c98d002e04ef4b5"
+    },
+    "code/research/multiclass/bootstrap.py": {
+      "source": "multiclass_metrics_v1/bootstrap.py",
+      "sha256": "8750d82af9ce113ce9339b5732036540a71a420bb1f080a4da301dd1aff8f127"
+    },
+    "code/research/multiclass/infer.py": {
+      "source": "multiclass_metrics_v1/infer.py",
+      "sha256": "389781349deb4d50cbb83e18a3dcde3e8fc4c9abe771508e0904dc95d20a20a3"
+    },
+    "code/research/multiclass/test_metrics.py": {
+      "source": "multiclass_metrics_v1/test_metrics.py",
+      "sha256": "e9f31b3a930b5eb43c0f62d216d52da21a8d68c9a1d33a72f8b767da9be4aff2"
+    },
+    "code/research/multiclass/PROTOCOL.md": {
+      "source": "multiclass_metrics_v1/PROTOCOL.md",
+      "sha256": "7a342947ac0b942cea6e585a745fb119a321d189bb10b4d7f96cc26c16105bf8"
+    },
+    "code/research/multiclass/labels/banking77.npz": {
+      "source": "multiclass_metrics_v1/labels/banking77.npz",
+      "sha256": "4b348c6280977ad62d3a277a3d03bc343d2d8add3c22e544766c3e398f736161"
+    },
+    "code/research/multiclass/labels/clinc150.npz": {
+      "source": "multiclass_metrics_v1/labels/clinc150.npz",
+      "sha256": "0de9900638bf3dc92d545355a3363fb454514e621b62336ccb1ba7c54ea59e39"
+    },
+    "code/research/multiclass/labels/manifest.json": {
+      "source": "multiclass_metrics_v1/labels/manifest.json",
+      "sha256": "aa59f63137c9298de8670be4da84e7deabc1f87d21def2c4a30582fef9d3850c"
+    },
+    "code/research/evidence/multiclass_contrasts.csv": {
+      "source": "main/evidence/multiclass_contrasts.csv",
+      "sha256": "63e4590d58d4aa70dfb071d5f8ab4bfc96f6da305f1da45185b83fd0b5271e41"
+    },
+    "code/research/evidence/bank_family.csv": {
+      "source": "main/evidence/bank_family.csv",
+      "sha256": "59ac0417846dcb1705954e2fc9f06c83586e2aeae371278cd50f89cf6f5c9856"
+    },
+    "code/research/evidence/clinc_pairs.json": {
+      "source": "main/evidence/clinc_pairs.json",
+      "sha256": "6fec2d8c0adb3a62a407db54e4192d5af3c2bbb1664791be6d354b6d9e243de6"
+    },
+    "code/research/evidence/clinc_primary.csv": {
+      "source": "main/evidence/clinc_primary.csv",
+      "sha256": "be9f687a83f0b68b3146dcdcf20841c0d5d1347b9c8137d9bef039ed51e0519e"
+    },
+    "code/research/evidence/class_example_overall.csv": {
+      "source": "main/evidence/class_example_overall.csv",
+      "sha256": "b6d4cfc11e626a596963313ae10b8f3eb51315d36134a334b1e0774f59558cdc"
+    },
+    "code/research/evidence/primary_metrics.csv": {
+      "source": "main/evidence/primary_metrics.csv",
+      "sha256": "8e434565b460325ff24e94ab571e30d8f53c487ef19ec139e619e08499dcaea5"
+    },
+    "code/research/evidence/clinc_mc10000.csv": {
+      "source": "main/evidence/clinc_mc10000.csv",
+      "sha256": "87c4aac8e60788af907e95dc7951aa282f64d3fc57e43f2ead5217562c8aebca"
+    },
+    "code/research/evidence/class_example.csv": {
+      "source": "main/evidence/class_example.csv",
+      "sha256": "2d61ff4ad2d01bed6a3badf59c9d36629c7b6498f673032119d3649244482c6e"
+    },
+    "code/research/evidence/multiclass_findings.json": {
+      "source": "main/evidence/multiclass_findings.json",
+      "sha256": "cf984613e0cbc5a28a1ac265f3d6895ca40f0b31c79f26ed3af5283f36597042"
+    },
+    "code/research/evidence/multiclass_verification.json": {
+      "source": "main/evidence/multiclass_verification.json",
+      "sha256": "324ec8f7a25c1d5bb72a8535b47270989b27425e9e89aa6c28e8dbf2405ec954"
+    },
+    "code/research/evidence/clinc_protocol.md": {
+      "source": "main/evidence/clinc_protocol.md",
+      "sha256": "2e72f98139788733981ee8d0fcf17e11c9556177f20b2306238a3d4cf7df9f9b"
+    },
+    "code/research/evidence/bank_contrasts.csv": {
+      "source": "main/evidence/bank_contrasts.csv",
+      "sha256": "cc62d665e6451508ba192c7b2b3bae8935cdc2770f008e21f01491dbae2e9c62"
+    },
+    "code/research/evidence/multiclass_protocol.md": {
+      "source": "main/evidence/multiclass_protocol.md",
+      "sha256": "7a342947ac0b942cea6e585a745fb119a321d189bb10b4d7f96cc26c16105bf8"
+    },
+    "code/research/evidence/expert_metrics.csv": {
+      "source": "multiclass_metrics_v1/summary/expert_metrics.csv",
+      "sha256": "442f6d207caefdab68e24a4d7376630d06ce15de4d736495c2ac3072f75f131b"
+    },
+    "code/research/evidence/article_claims.csv": {
+      "source": "main/additions/generated/claims.csv",
+      "sha256": "63cd5a12f573aa95731b6715b71f9d154a119210af3f012d727280a95875bc0e"
+    },
+    "code/archive/build_documents_20261023.py": {
+      "source": "restored_main/code/build_documents.py",
+      "sha256": "0a4e71d96026cae66f0b5ae56ae1bf7fedd43c95ef42a6ba422f371afb9981aa"
+    }
+  }
+}

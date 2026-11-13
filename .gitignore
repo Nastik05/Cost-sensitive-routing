@@ -183,3 +183,17 @@ code/results/
 *.snm
 *.toc
 *.synctex.gz
+
+# Recomputed expanded experiments; published reference tables are in evidence/.
+code/research/results/
+code/research/clinc150/results/
+code/research/clinc150/smoke/
+code/research/clinc150/statistics/
+code/research/clinc150/statistics_mc10000/
+code/research/clinc150/events.jsonl
+code/research/multiclass/results/
+code/research/multiclass/summary/
+code/research/multiclass/statistics/
+code/research/multiclass/compute.log
+*.fls
+*.fdb_latexmk

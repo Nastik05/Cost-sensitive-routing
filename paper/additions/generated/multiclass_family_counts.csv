@@ -1,0 +1,10 @@
+dataset,criterion,metric,sum,size
+banking77,mse,accuracy,0,756
+banking77,mse,macro_f1,0,756
+banking77,mse,macro_precision,0,756
+clinc150,accuracy,accuracy,0,216
+clinc150,accuracy,macro_f1,0,216
+clinc150,accuracy,macro_precision,0,216
+clinc150,mse,accuracy,1,216
+clinc150,mse,macro_f1,1,216
+clinc150,mse,macro_precision,0,216

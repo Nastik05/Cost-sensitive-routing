@@ -1,0 +1,15 @@
+kind,criterion,sum,size
+correction,accuracy,9,48
+correction,mse,9,48
+criterion_effect,accuracy-minus-mse,0,144
+criterion_interaction,accuracy-minus-mse,0,42
+gain_interaction,accuracy,8,126
+gain_interaction,mse,1,126
+gain_simple,accuracy,20,378
+gain_simple,mse,11,378
+interaction_vs_weak,accuracy,8,42
+interaction_vs_weak,mse,12,42
+selector,accuracy,0,36
+selector,mse,0,36
+simple_vs_weak,accuracy,8,126
+simple_vs_weak,mse,9,126

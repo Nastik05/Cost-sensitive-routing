@@ -1,0 +1,12 @@
+kind,arm,sum,size
+correction,harm8_ipw,34,168
+correction,rescue8_ipw,0,168
+interaction,harm8_raw,56,756
+interaction,rescue8_raw,0,756
+profile,natural_raw,0,1512
+selector,harm8_raw,0,21
+selector,natural_raw,0,21
+selector,rescue8_raw,0,21
+simple,harm8_raw,77,756
+simple,natural_raw,0,756
+simple,rescue8_raw,0,756

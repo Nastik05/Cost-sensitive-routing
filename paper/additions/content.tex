@@ -1,0 +1,41 @@
+\clearpage
+\section{Расширенные эксперименты: влияние состава обучения}
+\label{sec:additive_results}
+Базовый эксперимент предыдущего раздела сравнивает четыре правила
+на двух парах экспертов при 10 подвыборках без возвращения.
+Далее исследуется полный набор восьми способов обучения:
+на BANKING77 проверяются все 21 пары семи экспертов,
+затем наблюдения проверяются на новой панели CLINC150.
+Расширенный протокол использует 20 повторений и извлечения
+с возвращением, позволяющие контролировать состав парной разметки.
+Дополнительно анализируется качество конечных многоклассовых ответов.
+
+\paragraph{Основные установленные эффекты.}
+\begin{enumerate}
+\item \textbf{Сравнительная деградация при harm-отборе.}
+Изменение разности Direct--Weak-error равно \BankShiftEffect{} п.п.
+для TF--IDF $\to$ frozen MiniLM на BANKING77 и \ClincShiftEffect{} п.п.
+для TFfull $\to$ MiniLM на CLINC150 в рассматриваемых режимах.
+\item \textbf{Выигрыш внутри gain-семейства.}
+В harm8 raw на CLINC150 Hurdle превосходит Direct на
+\HurdleSimpleEffect{} п.п.; изменение их сравнительной разности
+между составами составляет \HurdleShiftEffect{} п.п.
+\item \textbf{Прирост при корректировке известного отбора.}
+Direct с IPW выигрывает у raw-обучения на \CorrectionEffect{} п.п.
+в указанной CLINC150-паре.
+\item \textbf{Преимущество в natural по конечным классовым ответам.}
+Для CLINC150, TF3 $\to$ MiniLM, MSE-настройка,
+Ternary превосходит Hurdle на \NaturalAccuracyEffect{} п.п. accuracy
+и \NaturalFoneEffect{} п.п. macro-F1.
+\end{enumerate}
+Для каждого эффекта далее приведены условия, одновременные интервалы
+и полная статистическая семья. Утверждения относятся к конкретным
+конфигурациям, а не к универсальному рейтингу методов.
+
+\input{additions/method}
+\input{additions/theory_addition}
+\input{additions/protocol}
+\input{additions/results}
+\input{additions/multiclass}
+\input{additions/discussion}
+\input{additions/conclusion}

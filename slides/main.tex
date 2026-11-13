@@ -1,39 +1,153 @@
 \documentclass[aspectratio=169,11pt]{beamer}
 \usepackage{fontspec}
 \setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
 \usepackage{polyglossia}
 \setdefaultlanguage{russian}
-\usepackage{graphicx}
+\usepackage{amsmath,booktabs,graphicx,tikz}
+\usetikzlibrary{arrows.meta,positioning}
 \definecolor{ink}{HTML}{17324D}
 \definecolor{accent}{HTML}{277D77}
+\definecolor{warm}{HTML}{B65A38}
+\definecolor{muted}{HTML}{66778A}
 \setbeamercolor{normal text}{fg=ink,bg=white}
+\setbeamercolor{frametitle}{fg=ink}
+\setbeamercolor{structure}{fg=accent}
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{footline}{}
-\setbeamerfont{normal text}{size=\small}
-\setbeamersize{text margin left=.55cm,text margin right=.55cm}
+\setbeamertemplate{footline}{\hfill\scriptsize\insertframenumber\hspace{.5cm}\vspace{.2cm}}
+\setbeamerfont{frametitle}{size=\fontsize{14}{17}\selectfont,series=\bfseries}
+\setbeamersize{text margin left=.6cm,text margin right=.6cm}
+\hypersetup{pdftitle={Выбор политики маршрутизации в двухмодельных каскадах: влияние данных, структуры ошибок и вычислительного бюджета},pdfauthor={Anastasia Shlopak}}
+\tikzset{box/.style={draw=accent!60,rounded corners,fill=accent!5,align=center,minimum height=.85cm,text width=3.1cm,font=\fontsize{10}{12}\selectfont},
+ arr/.style={-{Stealth},thick,draw=ink}}
+\newcommand{\takeaway}[1]{\par\vspace{.16cm}{\fontsize{11}{14}\selectfont\color{accent}\bfseries #1}\par}
+\newcommand{\captionnote}[1]{\par\vspace{.10cm}{\fontsize{8}{10}\selectfont #1}\par}
 \begin{document}
-\begin{frame}[t,plain]
-{\fontsize{15}{18}\selectfont\bfseries Обучение роутера: исправления и вред}\par
-\vspace{.1cm}
-{\fontsize{8}{10}\selectfont Anastasia Shlopak \hfill Руководитель: Archil Maysuradze, PhD}\par
-\vspace{.14cm}
-{\fontsize{10}{12}\selectfont\textbf{Цель:} выбор обучения роутера по данным, паре моделей и бюджету.}\par
-\vspace{.12cm}
-{\fontsize{9}{11}\selectfont\textcolor{accent}{Контроль:} фиксируем экспертов и признаки; меняем объём и состав train.}\par
-\vspace{.03cm}
-{\centering
-\includegraphics[height=3.0cm]{../paper/figures/decision_profiles.pdf}
-\par}
-\vspace{-.2cm}
-{\fontsize{7.5}{9}\selectfont BANKING77: TF--IDF $\to$ BERT-tiny; 20\% вызовов; fit 1000/dev 500; 10 обучений.}\par
-\vspace{.13cm}
-{\fontsize{8.5}{10.5}\selectfont Строки: $+1$ --- выбор лучше альтернативы;
-$-1$ --- хуже; $0$ --- правильность совпадает.}\par
-\vspace{.17cm}
-{\fontsize{10}{12}\selectfont\textbf{Наблюдение:} Events реже исправляет \emph{и} реже портит ответы.}\par
-\vspace{.1cm}
-{\fontsize{7.5}{9}\selectfont Профиль описательный; различия accuracy после общей поправки не установлены.}\par
-\vspace{.15cm}
-{\fontsize{8.5}{10.5}\selectfont\textcolor{accent}{Далее:} проверить компоненты, коррекцию отбора и перенос рекомендаций.}
+
+% 1: exact requested title; retain the cascade and rescue/harm illustration.
+\begin{frame}[t]{Выбор политики маршрутизации в двухмодельных каскадах:\\
+влияние данных, структуры ошибок и вычислительного бюджета}
+\vspace{.05cm}
+{\fontsize{9}{11}\selectfont Anastasia Shlopak\hfill Руководитель: Archil Maysuradze, PhD}\par
+\vspace{.10cm}
+\centering
+\begin{tikzpicture}[node distance=.55cm]
+\node[box] (a) {Первая модель\\отвечает всегда};
+\node[box,right=of a] (b) {Роутер\\выбирает запросы};
+\node[box,right=of b] (c) {Вторая модель\\заменяет ответ};
+\draw[arr] (a)--(b);
+\draw[arr] (b)--node[above=20pt,font=\fontsize{8}{10}\selectfont]{по квоте}(c);
+\node[box,below=.55cm of a,text width=4.3cm,xshift=.6cm] (r) {Спасение:\\ошибка исправлена};
+\node[box,draw=warm!60,fill=warm!5,below=.55cm of c,text width=4.3cm,xshift=-.6cm] (h) {Вред:\\правильный ответ испорчен};
+\end{tikzpicture}
+\vspace{.20cm}
+\takeaway{Цель — выбрать обучение роутера с учётом данных и ошибок экспертов.}
 \end{frame}
+
+% 2: methods table and the two requested explanatory statements.
+\begin{frame}{Выбор методов обучения роутера}
+\centering
+{\fontsize{10}{12}\selectfont
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{6pt}
+\begin{tabular}{lp{10.1cm}}
+\toprule
+Метод & Обучающая цель / представление \\
+\midrule
+Direct & Прямая регрессия прироста \\
+Marginal & Две оценки правильности \\
+Events & Спасение и вред отдельными головами \\
+Ternary & Три значения прироста \\
+Joint & Четыре совместных исхода экспертов \\
+Hurdle & Наличие расхождения и его направление \\
+Soft-gain & Мягкая метка прироста \\
+Weak-error & Ошибка первого эксперта: отдельная proxy-цель \\
+\bottomrule
+\end{tabular}\par}
+\vspace{.28cm}
+{\fontsize{10}{13}\selectfont
+Дополнительно использовались два необучаемых контроля —\\
+confidence и случайное ранжирование в качестве baseline.\par}
+\vspace{.20cm}
+{\fontsize{9}{11}\selectfont\color{muted}
+Эксперименты проводились на датасете BANKING77\\
+и 21 паре фиксированных моделей.\par}
+\end{frame}
+
+% 3: sampling table on the left, the original slide-6 graph on the right.
+\begin{frame}{Влияние состава данных на выбор политики роутера}
+\begin{columns}[c,onlytextwidth]
+\begin{column}{.31\textwidth}
+\centering
+{\fontsize{7.5}{10}\selectfont
+\setlength{\tabcolsep}{1.3pt}
+\renewcommand{\arraystretch}{1.55}
+\begin{tabular}{lccc}
+\toprule
+Отбор & Rescue & Neutral & Harm \\
+\midrule
+Natural & 1 & 1 & 1 \\
+Rescue-rich & 2 / 8 & 1 & 1 \\
+Harm-rich & 1 & 1 & 2 / 8 \\
+Discordant & 8 & 1 & 8 \\
+Neutral & 1 & 8 & 1 \\
+\bottomrule
+\end{tabular}\par}
+\end{column}
+\begin{column}{.67\textwidth}
+\centering
+\includegraphics[width=\linewidth]{assets/imbalance_natural_profiles.pdf}
+\end{column}
+\end{columns}
+\vspace{.45cm}
+\takeaway{Главная проверка — меняется ли разрыв в качестве между методами при смене состава обучающих данных.}
+\end{frame}
+
+% 4: preserve the supplied main result, remove the crossed-out last sentence.
+\begin{frame}{Harm-rich снижает относительное качество gain-методов}
+\centering
+{\fontsize{10}{12}\selectfont TF--IDF $\to$ frozen MiniLM; fit 1\,000; квота 20\%; 20 seeds.\par}
+\vspace{.15cm}
+{\fontsize{9.5}{11.5}\selectfont
+\renewcommand{\arraystretch}{1.05}
+\setlength{\tabcolsep}{6pt}
+\input{assets/key_result_table}
+\par}
+\vspace{.17cm}
+\takeaway{Direct теряет 4,87 п.п. относительно Weak-error при смене состава.}
+\captionnote{$\Delta$ — изменение разности accuracy против Weak-error.\\
+95\% интервалы одновременные для всей семьи из 5\,691 контраста.}
+\end{frame}
+
+% Author-requested wording, condensed for the slide; see README.md.
+\begin{frame}{Основные результаты работы}
+{\normalfont\fontsize{9}{12}\selectfont
+Полный факторный анализ экспериментов, включая смену классификаторов:\\
+установлены и теоретически доказаны три ключевых условия.\par}
+\vspace{.20cm}
+\begin{tikzpicture}
+\node[rounded corners,fill=accent!6,draw=accent!25,minimum width=14.6cm,minimum height=1.6cm] at (0,0) {};
+\node[circle,fill=accent,text=white,font=\bfseries,minimum size=.58cm] at (-6.73,0) {1};
+\node[anchor=west,font=\fontsize{10.5}{12}\selectfont\bfseries] at (-6.15,.47) {Уникальные ошибки второй модели};
+\node[anchor=west,text width=12.7cm,align=left,font=\normalfont\fontsize{9}{11.5}\selectfont] at (-6.15,-.23) {
+Если ошибки второй модели не коррелируют с первой, выгоднее\\
+напрямую предсказывать прирост — использовать Gain-методы.};
+
+\node[rounded corners,fill=warm!6,draw=warm!30,minimum width=14.6cm,minimum height=1.6cm] at (0,-1.8) {};
+\node[circle,fill=warm,text=white,font=\bfseries,minimum size=.58cm] at (-6.73,-1.8) {2};
+\node[anchor=west,font=\fontsize{10.5}{12}\selectfont\bfseries] at (-6.15,-1.33) {Сдвиг распределения данных (Data shift)};
+\node[anchor=west,text width=12.7cm,align=left,font=\normalfont\fontsize{9}{11.5}\selectfont] at (-6.15,-2.03) {
+Gain-политики становятся неуверенными при дисбалансе обучения,\\
+особенно при обогащении выборки вредными заменами.};
+
+\node[rounded corners,fill=accent!6,draw=accent!25,minimum width=14.6cm,minimum height=1.95cm] at (0,-3.78) {};
+\node[circle,fill=accent,text=white,font=\bfseries,minimum size=.58cm] at (-6.73,-3.78) {3};
+\node[anchor=west,font=\fontsize{10.5}{12}\selectfont\bfseries] at (-6.15,-3.16) {Разрыв в силе моделей (Quality gap)};
+\node[anchor=west,text width=12.7cm,align=left,font=\normalfont\fontsize{9}{11.5}\selectfont] at (-6.15,-4.00) {
+Вторая модель значительно сильнее → более агрессивный роутер.\\
+Сопоставимое качество, разная архитектура → решающую роль\\
+играет точная калибровка вероятностей.};
+\end{tikzpicture}
+\end{frame}
+
 \end{document}
